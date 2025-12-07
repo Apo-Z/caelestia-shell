@@ -53,6 +53,18 @@ ColumnLayout {
                 popouts.currentCenter = Qt.binding(() => icon.mapToItem(root, 0, icon.implicitHeight / 2).y);
                 popouts.hasCurrent = true;
             }
+        } else if (id === "prayerTimes" && Config.bar.popouts.prayerTimes) {
+            popouts.currentName = id.toLowerCase();
+            popouts.currentCenter = item.mapToItem(root, 0, itemHeight / 2).y;
+            popouts.hasCurrent = true;
+        } else if (id === "kubernetes" && Config.bar.popouts.kubernetes) {
+            popouts.currentName = id.toLowerCase();
+            popouts.currentCenter = item.mapToItem(root, 0, itemHeight / 2).y;
+            popouts.hasCurrent = true;
+        } else if (id === "smartDesk" && Config.bar.popouts.smartDesk) {
+            popouts.currentName = id.toLowerCase();
+            popouts.currentCenter = item.mapToItem(root, 0, itemHeight / 2).y;
+            popouts.hasCurrent = true;
         } else if (id === "tray" && Config.bar.popouts.tray) {
             if (!Config.bar.tray.compact || (item.expanded && !item.expandIcon.contains(mapToItem(item.expandIcon, item.implicitWidth / 2, y)))) {
                 const index = Math.floor(((y - top - item.padding * 2 + item.spacing) / item.layout.implicitHeight) * item.items.count);
@@ -164,6 +176,24 @@ ColumnLayout {
                     sourceComponent: Power {
                         visibilities: root.visibilities
                     }
+                }
+            }
+            DelegateChoice {
+                roleValue: "prayerTimes"
+                delegate: WrappedLoader {
+                    sourceComponent: PrayerTimes {}
+                }
+            }
+            DelegateChoice {
+                roleValue: "kubernetes"
+                delegate: WrappedLoader {
+                    sourceComponent: Kubernetes {}
+                }
+            }
+            DelegateChoice {
+                roleValue: "smartDesk"
+                delegate: WrappedLoader {
+                    sourceComponent: SmartDesk {}
                 }
             }
         }

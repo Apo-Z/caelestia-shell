@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import "bluetooth"
+import "kubernetes"
 import qs.components
 import qs.services
 import qs.config
@@ -51,6 +52,13 @@ ClippingRectangle {
                     font.pointSize: Appearance.font.size.extraLarge
                     font.weight: 500
                 }
+            }
+        }
+
+        Pane {
+            index: 3
+            sourceComponent: K8sPane {
+                session: root.session
             }
         }
 

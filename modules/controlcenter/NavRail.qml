@@ -171,6 +171,11 @@ Item {
             icon: "tune"
             label: "audio"
         }
+
+        NavItem {
+            icon: "dns"
+            label: "kubernetes"
+        }
     }
 
     component NavItem: Item {

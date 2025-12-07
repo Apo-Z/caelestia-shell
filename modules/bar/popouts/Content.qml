@@ -65,6 +65,23 @@ Item {
             sourceComponent: LockStatus {}
         }
 
+        Popout {
+            name: "prayertimes"
+            sourceComponent: PrayerTimes {}
+        }
+
+        Popout {
+            name: "kubernetes"
+            sourceComponent: Kubernetes {
+                wrapper: root.wrapper
+            }
+        }
+
+        Popout {
+            name: "smartdesk"
+            sourceComponent: SmartDesk {}
+        }
+
         Repeater {
             model: ScriptModel {
                 values: [...SystemTray.items.values]

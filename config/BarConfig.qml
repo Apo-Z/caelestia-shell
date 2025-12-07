@@ -63,6 +63,9 @@ JsonObject {
         property bool activeWindow: true
         property bool tray: true
         property bool statusIcons: true
+        property bool prayerTimes: true
+        property bool kubernetes: true
+        property bool smartDesk: true
     }
 
     component Workspaces: JsonObject {
@@ -111,5 +114,8 @@ JsonObject {
         property int trayMenuWidth: 300
         property int batteryWidth: 250
         property int networkWidth: 320
+        property int prayerTimesWidth: 280
+        property int kubernetesWidth: 350
+        property int smartDeskWidth: 300
     }
 }
