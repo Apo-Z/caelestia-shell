@@ -21,17 +21,18 @@ Singleton {
         const name = providerName;
         const iface = interfaceName;
         const defaults = getBuiltinDefaults(name, iface);
-        
+
         if (isCustomProvider) {
             const custom = providerInput;
             return {
                 connectCmd: custom.connectCmd || defaults.connectCmd,
                 disconnectCmd: custom.disconnectCmd || defaults.disconnectCmd,
                 interface: custom.interface || defaults.interface,
-                displayName: custom.displayName || defaults.displayName
+                displayName: custom.displayName || defaults.displayName,
+                statusCmd: custom.statusCmd !== undefined ? custom.statusCmd : defaults.statusCmd
             };
         }
-        
+
         return defaults;
     }
 
@@ -41,33 +42,38 @@ Singleton {
                 connectCmd: ["pkexec", "wg-quick", "up", iface],
                 disconnectCmd: ["pkexec", "wg-quick", "down", iface],
                 interface: iface,
-                displayName: iface
+                displayName: iface,
+                statusCmd: null
             },
             "warp": {
                 connectCmd: ["warp-cli", "connect"],
                 disconnectCmd: ["warp-cli", "disconnect"],
                 interface: "CloudflareWARP",
-                displayName: "Warp"
+                displayName: "Warp",
+                statusCmd: null
             },
             "netbird": {
                 connectCmd: ["netbird", "up"],
                 disconnectCmd: ["netbird", "down"],
                 interface: "wt0",
-                displayName: "NetBird"
+                displayName: "NetBird",
+                statusCmd: null
             },
             "tailscale": {
                 connectCmd: ["tailscale", "up"],
                 disconnectCmd: ["tailscale", "down"],
                 interface: "tailscale0",
-                displayName: "Tailscale"
+                displayName: "Tailscale",
+                statusCmd: ["tailscale", "status", "--json"]
             }
         };
-        
+
         return builtins[name] || {
             connectCmd: [name, "up"],
             disconnectCmd: [name, "down"],
             interface: iface || name,
-            displayName: name
+            displayName: name,
+            statusCmd: null
         };
     }
 
@@ -124,15 +130,37 @@ Singleton {
     Process {
         id: statusProc
 
-        command: ["ip", "link", "show"]
+        command: {
+            if (root.currentConfig && root.currentConfig.statusCmd) {
+                return root.currentConfig.statusCmd;
+            }
+            return ["ip", "link", "show"];
+        }
         environment: ({
             LANG: "C.UTF-8",
             LC_ALL: "C.UTF-8"
         })
         stdout: StdioCollector {
             onStreamFinished: {
-                const iface = root.currentConfig ? root.currentConfig.interface : "";
-                root.connected = iface && text.includes(iface + ":");
+                if (root.currentConfig && root.currentConfig.statusCmd) {
+                    // For providers with custom status command (e.g., Tailscale)
+                    try {
+                        const status = JSON.parse(text);
+                        // Tailscale specific: check BackendState
+                        if (status.BackendState) {
+                            root.connected = status.BackendState === "Running";
+                        } else {
+                            root.connected = false;
+                        }
+                    } catch (e) {
+                        console.warn("Failed to parse VPN status:", e);
+                        root.connected = false;
+                    }
+                } else {
+                    // Default: check interface presence
+                    const iface = root.currentConfig ? root.currentConfig.interface : "";
+                    root.connected = iface && text.includes(iface + ":");
+                }
             }
         }
     }
