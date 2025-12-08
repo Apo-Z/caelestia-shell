@@ -173,7 +173,7 @@ Item {
         }
 
         NavItem {
-            icon: "dns"
+            icon: "workspaces"
             label: "kubernetes"
         }
     }

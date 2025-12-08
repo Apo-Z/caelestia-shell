@@ -104,7 +104,7 @@ ColumnLayout {
             spacing: Appearance.spacing.normal
 
             MaterialIcon {
-                text: "dns"
+                text: "workspaces"
                 color: Kubernetes.nodesReady === Kubernetes.nodesTotal
                     ? Colours.palette.m3tertiary
                     : Colours.palette.m3error

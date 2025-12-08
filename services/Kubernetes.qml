@@ -197,11 +197,7 @@ Singleton {
     }
 
     function getStatusIcon(): string {
-        switch (statusClass) {
-            case "critical": return "error";
-            case "warning": return "warning";
-            default: return "check_circle";
-        }
+        return "workspaces";
     }
 
     function deleteInactivePods(): void {
