@@ -18,11 +18,11 @@ StyledRect {
     implicitWidth: Config.bar.sizes.innerWidth
     implicitHeight: Config.bar.sizes.innerWidth
 
-    StyledText {
+    MaterialIcon {
         id: k8sIcon
 
         anchors.centerIn: parent
-        text: "☸"
+        text: "workspaces"  // Icône représentant des clusters/workspaces
         color: {
             if (!Kubernetes.isConnected) return Colours.palette.m3error;
             switch (Kubernetes.statusClass) {
@@ -32,6 +32,7 @@ StyledRect {
             }
         }
         font.pointSize: Appearance.font.size.large
+        animate: true
     }
 
     // Indicateur de chargement

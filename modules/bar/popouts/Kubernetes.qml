@@ -12,20 +12,21 @@ ColumnLayout {
 
     required property Item wrapper
 
-    spacing: Appearance.spacing.small
+    width: Config.bar.sizes.kubernetesWidth
+    spacing: Appearance.spacing.normal
 
-    // Header avec badge de statut
+    // Titre centré
+    StyledText {
+        Layout.alignment: Qt.AlignHCenter
+        text: qsTr("Kubernetes")
+        font.weight: 600
+        font.pixelSize: Appearance.font.size.normal
+    }
+
+    // Badge de statut
     RowLayout {
-        Layout.fillWidth: true
-        Layout.topMargin: Appearance.padding.normal
-        Layout.rightMargin: Appearance.padding.small
+        Layout.alignment: Qt.AlignHCenter
         spacing: Appearance.spacing.normal
-
-        StyledText {
-            text: qsTr("Kubernetes")
-            font.weight: 600
-            font.pixelSize: Appearance.font.size.normal
-        }
 
         StyledRect {
             implicitWidth: statusLabel.implicitWidth + Appearance.padding.small * 2
@@ -79,109 +80,141 @@ ColumnLayout {
 
     // Nom du cluster
     StyledText {
-        Layout.rightMargin: Appearance.padding.small
+        Layout.alignment: Qt.AlignHCenter
         visible: Kubernetes.isConnected
         text: Kubernetes.clusterContext || qsTr("Unknown cluster")
         color: Colours.palette.m3onSurfaceVariant
         font.pixelSize: Appearance.font.size.small
     }
 
-    // Stats
-    RowLayout {
+    // Stats - Nodes
+    StyledRect {
         Layout.fillWidth: true
-        Layout.topMargin: Appearance.spacing.small
-        Layout.rightMargin: Appearance.padding.small
+        implicitHeight: nodesRow.implicitHeight + Appearance.padding.normal * 2
         visible: Kubernetes.isConnected
-        spacing: Appearance.spacing.normal
 
-        MaterialIcon {
-            text: "dns"
-            color: Kubernetes.nodesReady === Kubernetes.nodesTotal
-                ? Colours.palette.m3tertiary
-                : Colours.palette.m3error
-            font.pointSize: Appearance.font.size.normal
-        }
+        color: Colours.tPalette.m3surfaceContainerHigh
+        radius: Appearance.rounding.normal
 
-        StyledText {
-            Layout.fillWidth: true
-            text: qsTr("Nodes: %1/%2").arg(Kubernetes.nodesReady).arg(Kubernetes.nodesTotal)
-            font.pixelSize: Appearance.font.size.small
-        }
+        RowLayout {
+            id: nodesRow
 
-        StyledText {
-            text: `${Kubernetes.nodesReady}/${Kubernetes.nodesTotal}`
-            color: Kubernetes.nodesReady === Kubernetes.nodesTotal
-                ? Colours.palette.m3tertiary
-                : Colours.palette.m3error
-            font.weight: 600
-            font.pixelSize: Appearance.font.size.small
+            anchors.fill: parent
+            anchors.margins: Appearance.padding.normal
+            spacing: Appearance.spacing.normal
+
+            MaterialIcon {
+                text: "dns"
+                color: Kubernetes.nodesReady === Kubernetes.nodesTotal
+                    ? Colours.palette.m3tertiary
+                    : Colours.palette.m3error
+                font.pointSize: Appearance.font.size.large
+            }
+
+            StyledText {
+                Layout.fillWidth: true
+                text: qsTr("Nodes")
+                font.weight: 500
+            }
+
+            StyledText {
+                text: `${Kubernetes.nodesReady}/${Kubernetes.nodesTotal}`
+                color: Kubernetes.nodesReady === Kubernetes.nodesTotal
+                    ? Colours.palette.m3tertiary
+                    : Colours.palette.m3error
+                font.weight: 600
+            }
         }
     }
 
-    RowLayout {
+    // Stats - Pods Running
+    StyledRect {
         Layout.fillWidth: true
-        Layout.rightMargin: Appearance.padding.small
+        implicitHeight: podsRow.implicitHeight + Appearance.padding.normal * 2
         visible: Kubernetes.isConnected
-        spacing: Appearance.spacing.normal
 
-        MaterialIcon {
-            text: "deployed_code"
-            color: Kubernetes.podsFailed > 0
-                ? Colours.palette.m3error
-                : Colours.palette.m3primary
-            font.pointSize: Appearance.font.size.normal
-        }
+        color: Colours.tPalette.m3surfaceContainerHigh
+        radius: Appearance.rounding.normal
 
-        StyledText {
-            Layout.fillWidth: true
-            text: qsTr("Pods running")
-            font.pixelSize: Appearance.font.size.small
-        }
+        RowLayout {
+            id: podsRow
 
-        StyledText {
-            text: Kubernetes.podsRunning.toString()
-            color: Kubernetes.podsFailed > 0
-                ? Colours.palette.m3error
-                : Colours.palette.m3primary
-            font.weight: 600
-            font.pixelSize: Appearance.font.size.small
+            anchors.fill: parent
+            anchors.margins: Appearance.padding.normal
+            spacing: Appearance.spacing.normal
+
+            MaterialIcon {
+                text: "deployed_code"
+                color: Kubernetes.podsFailed > 0
+                    ? Colours.palette.m3error
+                    : Colours.palette.m3primary
+                font.pointSize: Appearance.font.size.large
+            }
+
+            StyledText {
+                Layout.fillWidth: true
+                text: qsTr("Pods running")
+                font.weight: 500
+            }
+
+            StyledText {
+                text: Kubernetes.podsRunning.toString()
+                color: Kubernetes.podsFailed > 0
+                    ? Colours.palette.m3error
+                    : Colours.palette.m3primary
+                font.weight: 600
+            }
         }
     }
 
     // Failed pods warning
-    RowLayout {
+    StyledRect {
         Layout.fillWidth: true
-        Layout.topMargin: Appearance.spacing.small
-        Layout.rightMargin: Appearance.padding.small
+        implicitHeight: failedRow.implicitHeight + Appearance.padding.normal * 2
         visible: Kubernetes.podsFailed > 0
-        spacing: Appearance.spacing.normal
 
-        MaterialIcon {
-            text: "warning"
-            color: Colours.palette.m3error
-            font.pointSize: Appearance.font.size.normal
-        }
+        color: Colours.palette.m3errorContainer
+        radius: Appearance.rounding.normal
 
-        StyledText {
-            Layout.fillWidth: true
-            text: qsTr("%1 failed").arg(Kubernetes.podsFailed)
-            color: Colours.palette.m3error
-            font.weight: 500
-            font.pixelSize: Appearance.font.size.small
+        RowLayout {
+            id: failedRow
+
+            anchors.fill: parent
+            anchors.margins: Appearance.padding.normal
+            spacing: Appearance.spacing.normal
+
+            MaterialIcon {
+                text: "warning"
+                color: Colours.palette.m3onErrorContainer
+                font.pointSize: Appearance.font.size.large
+            }
+
+            StyledText {
+                Layout.fillWidth: true
+                text: qsTr("Failed pods")
+                color: Colours.palette.m3onErrorContainer
+                font.weight: 500
+            }
+
+            StyledText {
+                text: Kubernetes.podsFailed.toString()
+                color: Colours.palette.m3onErrorContainer
+                font.weight: 600
+            }
         }
     }
 
     // Open panel button
     StyledRect {
-        Layout.topMargin: Appearance.spacing.small
-        implicitWidth: expandBtn.implicitWidth + Appearance.padding.normal * 2
-        implicitHeight: expandBtn.implicitHeight + Appearance.padding.small
+        anchors.horizontalCenter: parent.horizontalCenter
+        implicitWidth: expandBtn.implicitWidth + Appearance.padding.large * 2
+        implicitHeight: expandBtn.implicitHeight + Appearance.padding.normal * 2
 
-        radius: Appearance.rounding.normal
-        color: Colours.palette.m3primaryContainer
+        radius: Appearance.rounding.full
+        color: Colours.tPalette.m3surfaceContainer
 
         StateLayer {
-            color: Colours.palette.m3onPrimaryContainer
+            radius: Appearance.rounding.full
 
             function onClicked(): void {
                 root.wrapper.detach("kubernetes");
@@ -194,16 +227,14 @@ ColumnLayout {
             anchors.centerIn: parent
             spacing: Appearance.spacing.small
 
-            StyledText {
-                Layout.leftMargin: Appearance.padding.smaller
-                text: qsTr("Open panel")
-                color: Colours.palette.m3onPrimaryContainer
+            MaterialIcon {
+                text: "open_in_new"
+                color: Colours.palette.m3primary
             }
 
-            MaterialIcon {
-                text: "chevron_right"
-                color: Colours.palette.m3onPrimaryContainer
-                font.pointSize: Appearance.font.size.large
+            StyledText {
+                text: qsTr("Open panel")
+                color: Colours.palette.m3primary
             }
         }
     }
