@@ -18,28 +18,87 @@ Variants {
         id: scope
 
         required property ShellScreen modelData
-        readonly property bool barDisabled: {
+        readonly property bool screenFullyExcluded: {
             const regexChecker = /^\^.*\$$/;
             for (const filter of Config.bar.excludedScreens) {
+                // Only object format supports full exclusion
+                if (typeof filter !== 'object' || !filter.excludeAll)
+                    continue;
+
+                const screenPattern = filter.screen;
+
                 // If filter is a regex
-                if (regexChecker.test(filter)) {
-                    if ((new RegExp(filter)).test(modelData.name))
+                if (regexChecker.test(screenPattern)) {
+                    if ((new RegExp(screenPattern)).test(modelData.name))
                         return true;
                 } else {
-                    if (filter === modelData.name)
+                    if (screenPattern === modelData.name)
                         return true;
                 }
             }
             return false;
         }
 
-        Exclusions {
-            screen: scope.modelData
-            bar: bar
+        readonly property bool barDisabled: {
+            const regexChecker = /^\^.*\$$/;
+            for (const filter of Config.bar.excludedScreens) {
+                // Support both string (backward compatibility) and object format
+                const screenPattern = typeof filter === 'string' ? filter : filter.screen;
+                const outlineOnly = typeof filter === 'object' && filter.outlineOnly === true;
+                const excludeAll = typeof filter === 'object' && filter.excludeAll === true;
+
+                // Skip if only showing outline (not full bar exclusion)
+                if (outlineOnly)
+                    continue;
+
+                // Skip if excluding everything (handled separately)
+                if (excludeAll)
+                    continue;
+
+                // If filter is a regex
+                if (regexChecker.test(screenPattern)) {
+                    if ((new RegExp(screenPattern)).test(modelData.name))
+                        return true;
+                } else {
+                    if (screenPattern === modelData.name)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        readonly property bool barOutlineOnly: {
+            const regexChecker = /^\^.*\$$/;
+            for (const filter of Config.bar.excludedScreens) {
+                // Only object format supports outline-only mode
+                if (typeof filter !== 'object' || !filter.outlineOnly)
+                    continue;
+
+                const screenPattern = filter.screen;
+
+                // If filter is a regex
+                if (regexChecker.test(screenPattern)) {
+                    if ((new RegExp(screenPattern)).test(modelData.name))
+                        return true;
+                } else {
+                    if (screenPattern === modelData.name)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        Loader {
+            active: !scope.screenFullyExcluded && !scope.barDisabled
+            sourceComponent: Exclusions {
+                screen: scope.modelData
+                bar: bar
+            }
         }
 
         StyledWindow {
             id: win
+            visible: !scope.screenFullyExcluded
 
             readonly property bool hasFullscreen: Hypr.monitorFor(screen)?.activeWorkspace?.toplevels.values.some(t => t.lastIpcObject.fullscreen === 2) ?? false
             readonly property int dragMaskPadding: {
@@ -136,6 +195,7 @@ Variants {
 
                 Border {
                     bar: bar
+                    visible: !scope.barDisabled || scope.barOutlineOnly
                 }
 
                 Backgrounds {
@@ -183,7 +243,7 @@ Variants {
                     visibilities: visibilities
                     popouts: panels.popouts
 
-                    disabled: scope.barDisabled
+                    disabled: scope.barDisabled || scope.barOutlineOnly
 
                     Component.onCompleted: Visibilities.bars.set(scope.modelData, this)
                 }

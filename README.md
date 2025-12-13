@@ -400,7 +400,17 @@ default, you must create it manually.
                 }
             ]
         },
-        "excludedScreens": [""],
+        "excludedScreens": [
+            "DP-1",
+            {
+                "screen": "HDMI-A-1",
+                "outlineOnly": true
+            },
+            {
+                "screen": "DP-2",
+                "excludeAll": true
+            }
+        ],
         "activeWindow": {
             "inverted": false
         }
@@ -618,6 +628,135 @@ default, you must create it manually.
 ```
 
 </details>
+
+#### Excluding Screens from Bar
+
+The `excludedScreens` option in the bar configuration allows you to control what Caelestia displays on specific screens. This is useful for multi-monitor setups where you want different levels of shell interaction on each screen.
+
+##### Finding Your Screen Names
+
+Use `hyprctl monitors` to list all connected screens and their names (e.g., `DP-1`, `HDMI-A-1`, `eDP-1`).
+
+##### Configuration Formats
+
+**String format (excludes bar only):**
+```json
+"excludedScreens": ["DP-1", "^HDMI.*$"]
+```
+- No bar content or border visible
+- Space is NOT reserved (windows can use full screen)
+- Panels remain active (launcher, dashboard, session, sidebar)
+
+**Object format (flexible exclusion):**
+
+You can use an object format with the following fields:
+
+- **`screen`** (required): Screen name or regex pattern (e.g., `"DP-1"`, `"^HDMI.*$"`)
+- **`outlineOnly`** (optional, default `false`): Shows only border outline without bar content
+- **`excludeAll`** (optional, default `false`): Completely excludes all Caelestia elements
+
+```json
+"excludedScreens": [
+    {
+        "screen": "HDMI-A-1",
+        "outlineOnly": true
+    },
+    {
+        "screen": "DP-2",
+        "excludeAll": true
+    }
+]
+```
+
+**Mixed format:**
+```json
+"excludedScreens": [
+    "DP-1",
+    {
+        "screen": "HDMI-A-1",
+        "outlineOnly": true
+    },
+    {
+        "screen": "DP-2",
+        "excludeAll": true
+    }
+]
+```
+
+##### Option Effects
+
+| Option | Bar Content | Border | Space Reserved | Panels | Result |
+|--------|-------------|--------|----------------|--------|--------|
+| String format | ❌ | ❌ | ❌ | ✅ | No bar or border |
+| `outlineOnly: true` | ❌ | ✅ | ✅ | ✅ | Border only, space reserved |
+| `excludeAll: true` | ❌ | ❌ | ❌ | ❌ | Completely clean screen |
+| Default (no exclusion) | ✅ | ✅ | ✅ | ✅ | Full Caelestia shell |
+
+**Space Reserved** means Wayland exclusion zones prevent windows from overlapping the bar area.
+
+##### Option Priority
+
+If multiple options are set on the same screen object:
+1. `excludeAll: true` takes highest priority (ignores all other options)
+2. `outlineOnly: true` takes second priority
+3. Default behavior if no options are true
+
+##### Real-World Examples
+
+**Gaming setup (3 monitors):**
+```json
+"excludedScreens": [
+    {
+        "screen": "DP-1",
+        "excludeAll": true
+    }
+]
+```
+- Main gaming monitor (DP-1): Completely clean, no distractions
+- Secondary monitors: Full Caelestia interface for controls
+
+**Minimalist aesthetic:**
+```json
+"excludedScreens": [
+    {
+        "screen": "^DP-.*$",
+        "outlineOnly": true
+    }
+]
+```
+- All DP monitors: Only colored border visible, minimal distraction
+- Space still reserved so windows don't overlap
+
+**Laptop + external monitor:**
+```json
+"excludedScreens": [
+    {
+        "screen": "^HDMI.*$",
+        "excludeAll": true
+    }
+]
+```
+- Laptop screen (eDP-1): Full shell with all controls
+- External HDMI monitor: Completely clean workspace
+
+**Mixed multi-monitor:**
+```json
+"excludedScreens": [
+    "DP-1",
+    {
+        "screen": "DP-2",
+        "outlineOnly": true
+    },
+    {
+        "screen": "HDMI-A-1",
+        "excludeAll": true
+    }
+]
+```
+- DP-1: No bar (panels still accessible)
+- DP-2: Border outline only
+- HDMI-A-1: Completely clean
+- Other screens: Full Caelestia interface
 
 ### Home Manager Module
 
