@@ -493,6 +493,21 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                 "blur": 0.4
             }
         },
+        "desktopPrayer": {
+            "enabled": false,
+            "scale": 1.0,
+            "position": "bottom-left",
+            "shadow": {
+                        "opacity": 0.7,
+                "blur": 0.4
+            },
+            "background": {
+                "enabled": false,
+                "opacity": 0.7,
+                "blur": true
+            },
+            "invertColors": false
+        },
         "visualiser": {
             "enabled": false,
             "autoHide": true,
@@ -513,7 +528,8 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
         "popouts": {
             "activeWindow": true,
             "tray": true,
-            "statusIcons": true
+            "statusIcons": true,
+            "prayer": true
         },
         "workspaces": {
             "shown": 5,
@@ -609,6 +625,11 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                 "enabled": true
             }
         ],
+        "prayer": {
+            "background": false,
+            "showName": true,
+            "showIcon": true
+        },
         "entries": [
             {
                 "id": "logo",
@@ -636,6 +657,10 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
             },
             {
                 "id": "clock",
+                "enabled": true
+            },
+            {
+                "id": "prayer",
                 "enabled": true
             },
             {
