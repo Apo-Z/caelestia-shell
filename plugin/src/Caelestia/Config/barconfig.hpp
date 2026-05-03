@@ -27,6 +27,7 @@ class BarPopouts : public settings::ObjectNode {
     CONFIG_PROPERTY(bool, activeWindow, true)
     CONFIG_PROPERTY(bool, tray, true)
     CONFIG_PROPERTY(bool, statusIcons, true)
+    CONFIG_PROPERTY(bool, prayer, true)
 };
 
 class BarWorkspaces : public settings::ObjectNode {
@@ -103,6 +104,14 @@ class BarClock : public settings::ObjectNode {
     CONFIG_PROPERTY(bool, showSeconds, false)
 };
 
+class BarPrayer : public settings::ObjectNode {
+    CONFIG_NODE(BarPrayer, settings::ObjectNode)
+
+    CONFIG_PROPERTY(bool, background, false)
+    CONFIG_PROPERTY(bool, showName, true)
+    CONFIG_PROPERTY(bool, showIcon, true)
+};
+
 class BarConfig : public settings::ObjectNode {
     CONFIG_NODE(BarConfig, settings::ObjectNode)
 
@@ -115,6 +124,7 @@ class BarConfig : public settings::ObjectNode {
     CONFIG_SUBOBJECT(BarActiveWindow, activeWindow)
     CONFIG_SUBOBJECT(BarTray, tray)
     CONFIG_SUBOBJECT(BarClock, clock)
+    CONFIG_SUBOBJECT(BarPrayer, prayer)
     CONFIG_LIST(EntryList, statusIcons,
         DEFAULT_ARG({
             LIST_ENTRY(lockStatus, true),
