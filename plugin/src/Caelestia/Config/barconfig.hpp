@@ -30,6 +30,7 @@ class BarPopouts : public ConfigObject {
     CONFIG_PROPERTY(bool, activeWindow, true)
     CONFIG_PROPERTY(bool, tray, true)
     CONFIG_PROPERTY(bool, statusIcons, true)
+    CONFIG_PROPERTY(bool, prayer, true)
 
 public:
     explicit BarPopouts(QObject* parent = nullptr)
@@ -123,6 +124,19 @@ public:
         : ConfigObject(parent) {}
 };
 
+class BarPrayer : public ConfigObject {
+    Q_OBJECT
+    QML_ANONYMOUS
+
+    CONFIG_PROPERTY(bool, background, false)
+    CONFIG_PROPERTY(bool, showName, true)
+    CONFIG_PROPERTY(bool, showIcon, true)
+
+public:
+    explicit BarPrayer(QObject* parent = nullptr)
+        : ConfigObject(parent) {}
+};
+
 class BarConfig : public ConfigObject {
     Q_OBJECT
     QML_ANONYMOUS
@@ -137,6 +151,7 @@ class BarConfig : public ConfigObject {
     CONFIG_SUBOBJECT(BarTray, tray)
     CONFIG_SUBOBJECT(BarStatus, status)
     CONFIG_SUBOBJECT(BarClock, clock)
+    CONFIG_SUBOBJECT(BarPrayer, prayer)
     CONFIG_PROPERTY(QVariantList, entries,
         {
             vmap({ { u"id"_s, u"logo"_s }, { u"enabled"_s, true } }),
@@ -160,7 +175,8 @@ public:
         , m_activeWindow(new BarActiveWindow(this))
         , m_tray(new BarTray(this))
         , m_status(new BarStatus(this))
-        , m_clock(new BarClock(this)) {}
+        , m_clock(new BarClock(this))
+        , m_prayer(new BarPrayer(this)) {}
 };
 
 } // namespace caelestia::config

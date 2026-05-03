@@ -152,6 +152,7 @@ class BarTokens : public ConfigObject {
     CONFIG_PROPERTY(int, windowPreviewSize, 400)
     CONFIG_PROPERTY(int, trayMenuWidth, 300)
     CONFIG_PROPERTY(int, batteryWidth, 250)
+    CONFIG_PROPERTY(int, prayerWidth, 280)
     CONFIG_PROPERTY(int, networkWidth, 320)
     CONFIG_PROPERTY(int, kbLayoutWidth, 320)
 

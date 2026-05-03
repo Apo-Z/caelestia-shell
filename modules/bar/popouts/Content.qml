@@ -126,6 +126,11 @@ Item {
             sourceComponent: LockStatus {}
         }
 
+        Popout {
+            name: "prayer"
+            sourceComponent: PrayerPopout {}
+        }
+
         Repeater {
             model: ScriptModel {
                 values: SystemTray.items.values.filter(i => !GlobalConfig.bar.tray.hiddenIcons.includes(i.id))

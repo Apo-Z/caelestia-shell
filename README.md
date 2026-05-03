@@ -368,6 +368,22 @@ For example, to disable the bar on DP-1:
             },
             "invertColors": false
         },
+        "desktopPrayer": {
+            "enabled": false,
+            "scale": 1.0,
+            "position": "bottom-left",
+            "shadow": {
+                "enabled": true,
+                "opacity": 0.7,
+                "blur": 0.4
+            },
+            "background": {
+                "enabled": false,
+                "opacity": 0.7,
+                "blur": true
+            },
+            "invertColors": false
+        },
         "enabled": true,
         "visualiser": {
             "blur": false,
@@ -386,6 +402,11 @@ For example, to disable the bar on DP-1:
         "clock": {
             "background": false,
             "showDate": false,
+            "showIcon": true
+        },
+        "prayer": {
+            "background": false,
+            "showName": true,
             "showIcon": true
         },
         "dragThreshold": 20,
@@ -419,6 +440,10 @@ For example, to disable the bar on DP-1:
                 "enabled": true
             },
             {
+                "id": "prayer",
+                "enabled": true
+            },
+            {
                 "id": "statusIcons",
                 "enabled": true
             },
@@ -431,7 +456,8 @@ For example, to disable the bar on DP-1:
         "popouts": {
             "activeWindow": true,
             "statusIcons": true,
-            "tray": true
+            "tray": true,
+            "prayer": true
         },
         "scrollActions": {
             "brightness": true,
