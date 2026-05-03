@@ -279,6 +279,246 @@ CollapsibleSection {
 
     StyledText {
         Layout.topMargin: Tokens.spacing.normal
+        text: qsTr("Desktop Prayer")
+        font.pointSize: Tokens.font.size.larger
+        font.weight: 500
+    }
+
+    SwitchRow {
+        label: qsTr("Desktop Prayer enabled")
+        checked: rootPane.desktopPrayerEnabled
+        onToggled: checked => {
+            rootPane.desktopPrayerEnabled = checked;
+            rootPane.saveConfig();
+        }
+    }
+
+    SectionContainer {
+        id: prayerPosContainer
+
+        readonly property var pos: (rootPane.desktopPrayerPosition || "bottom-left").split('-')
+        readonly property string currentV: pos[0]
+        readonly property string currentH: pos[1]
+
+        function updatePrayerPos(v, h) {
+            rootPane.desktopPrayerPosition = v + "-" + h;
+            rootPane.saveConfig();
+        }
+
+        contentSpacing: Tokens.spacing.small
+        z: 1
+
+        StyledText {
+            text: qsTr("Positioning")
+            font.pointSize: Tokens.font.size.larger
+            font.weight: 500
+        }
+
+        SplitButtonRow {
+            label: qsTr("Vertical Position")
+            enabled: rootPane.desktopPrayerEnabled
+
+            menuItems: [
+                MenuItem {
+                    property string val: "top"
+
+                    text: qsTr("Top")
+                    icon: "vertical_align_top"
+                },
+                MenuItem {
+                    property string val: "middle"
+
+                    text: qsTr("Middle")
+                    icon: "vertical_align_center"
+                },
+                MenuItem {
+                    property string val: "bottom"
+
+                    text: qsTr("Bottom")
+                    icon: "vertical_align_bottom"
+                }
+            ]
+
+            Component.onCompleted: {
+                for (let i = 0; i < menuItems.length; i++) {
+                    if (menuItems[i].val === prayerPosContainer.currentV)
+                        active = menuItems[i];
+                }
+            }
+
+            onSelected: item => prayerPosContainer.updatePrayerPos(item.val, prayerPosContainer.currentH)
+        }
+
+        SplitButtonRow {
+            label: qsTr("Horizontal Position")
+            enabled: rootPane.desktopPrayerEnabled
+            expandedZ: 99
+
+            menuItems: [
+                MenuItem {
+                    property string val: "left"
+
+                    text: qsTr("Left")
+                    icon: "align_horizontal_left"
+                },
+                MenuItem {
+                    property string val: "center"
+
+                    text: qsTr("Center")
+                    icon: "align_horizontal_center"
+                },
+                MenuItem {
+                    property string val: "right"
+
+                    text: qsTr("Right")
+                    icon: "align_horizontal_right"
+                }
+            ]
+
+            Component.onCompleted: {
+                for (let i = 0; i < menuItems.length; i++) {
+                    if (menuItems[i].val === prayerPosContainer.currentH)
+                        active = menuItems[i];
+                }
+            }
+
+            onSelected: item => prayerPosContainer.updatePrayerPos(prayerPosContainer.currentV, item.val)
+        }
+    }
+
+    SwitchRow {
+        label: qsTr("Invert colors")
+        checked: rootPane.desktopPrayerInvertColors
+        onToggled: checked => {
+            rootPane.desktopPrayerInvertColors = checked;
+            rootPane.saveConfig();
+        }
+    }
+
+    SectionContainer {
+        contentSpacing: Tokens.spacing.small
+
+        StyledText {
+            text: qsTr("Shadow")
+            font.pointSize: Tokens.font.size.larger
+            font.weight: 500
+        }
+
+        SwitchRow {
+            label: qsTr("Enabled")
+            checked: rootPane.desktopPrayerShadowEnabled
+            onToggled: checked => {
+                rootPane.desktopPrayerShadowEnabled = checked;
+                rootPane.saveConfig();
+            }
+        }
+
+        SectionContainer {
+            contentSpacing: Tokens.spacing.normal
+
+            SliderInput {
+                Layout.fillWidth: true
+
+                label: qsTr("Opacity")
+                value: rootPane.desktopPrayerShadowOpacity * 100
+                from: 0
+                to: 100
+                suffix: "%"
+                validator: IntValidator {
+                    bottom: 0
+                    top: 100
+                }
+                formatValueFunction: val => Math.round(val).toString()
+                parseValueFunction: text => parseInt(text)
+
+                onValueModified: newValue => {
+                    rootPane.desktopPrayerShadowOpacity = newValue / 100;
+                    rootPane.saveConfig();
+                }
+            }
+        }
+
+        SectionContainer {
+            contentSpacing: Tokens.spacing.normal
+
+            SliderInput {
+                Layout.fillWidth: true
+
+                label: qsTr("Blur")
+                value: rootPane.desktopPrayerShadowBlur * 100
+                from: 0
+                to: 100
+                suffix: "%"
+                validator: IntValidator {
+                    bottom: 0
+                    top: 100
+                }
+                formatValueFunction: val => Math.round(val).toString()
+                parseValueFunction: text => parseInt(text)
+
+                onValueModified: newValue => {
+                    rootPane.desktopPrayerShadowBlur = newValue / 100;
+                    rootPane.saveConfig();
+                }
+            }
+        }
+    }
+
+    SectionContainer {
+        contentSpacing: Tokens.spacing.small
+
+        StyledText {
+            text: qsTr("Background")
+            font.pointSize: Tokens.font.size.larger
+            font.weight: 500
+        }
+
+        SwitchRow {
+            label: qsTr("Enabled")
+            checked: rootPane.desktopPrayerBackgroundEnabled
+            onToggled: checked => {
+                rootPane.desktopPrayerBackgroundEnabled = checked;
+                rootPane.saveConfig();
+            }
+        }
+
+        SwitchRow {
+            label: qsTr("Blur enabled")
+            checked: rootPane.desktopPrayerBackgroundBlur
+            onToggled: checked => {
+                rootPane.desktopPrayerBackgroundBlur = checked;
+                rootPane.saveConfig();
+            }
+        }
+
+        SectionContainer {
+            contentSpacing: Tokens.spacing.normal
+
+            SliderInput {
+                Layout.fillWidth: true
+
+                label: qsTr("Opacity")
+                value: rootPane.desktopPrayerBackgroundOpacity * 100
+                from: 0
+                to: 100
+                suffix: "%"
+                validator: IntValidator {
+                    bottom: 0
+                    top: 100
+                }
+                formatValueFunction: val => Math.round(val).toString()
+                parseValueFunction: text => parseInt(text)
+
+                onValueModified: newValue => {
+                    rootPane.desktopPrayerBackgroundOpacity = newValue / 100;
+                    rootPane.saveConfig();
+                }
+            }
+        }
+    }
+
+    StyledText {
+        Layout.topMargin: Tokens.spacing.normal
         text: qsTr("Visualiser")
         font.pointSize: Tokens.font.size.larger
         font.weight: 500

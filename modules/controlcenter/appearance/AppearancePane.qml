@@ -47,6 +47,17 @@ Item {
     property real desktopClockBackgroundOpacity: Config.background.desktopClock.background.opacity ?? 0.7
     property bool desktopClockBackgroundBlur: Config.background.desktopClock.background.blur ?? false
     property bool desktopClockInvertColors: Config.background.desktopClock.invertColors ?? false
+
+    property bool desktopPrayerEnabled: Config.background.desktopPrayer.enabled ?? false
+    property real desktopPrayerScale: Config.background.desktopPrayer.scale ?? 1
+    property string desktopPrayerPosition: Config.background.desktopPrayer.position ?? "bottom-left"
+    property bool desktopPrayerShadowEnabled: Config.background.desktopPrayer.shadow.enabled ?? true
+    property real desktopPrayerShadowOpacity: Config.background.desktopPrayer.shadow.opacity ?? 0.7
+    property real desktopPrayerShadowBlur: Config.background.desktopPrayer.shadow.blur ?? 0.4
+    property bool desktopPrayerBackgroundEnabled: Config.background.desktopPrayer.background.enabled ?? false
+    property real desktopPrayerBackgroundOpacity: Config.background.desktopPrayer.background.opacity ?? 0.7
+    property bool desktopPrayerBackgroundBlur: Config.background.desktopPrayer.background.blur ?? false
+    property bool desktopPrayerInvertColors: Config.background.desktopPrayer.invertColors ?? false
     property bool backgroundEnabled: Config.background.enabled ?? true
     property bool wallpaperEnabled: Config.background.wallpaperEnabled ?? true
     property bool visualiserEnabled: Config.background.visualiser.enabled ?? false
@@ -81,6 +92,17 @@ Item {
         GlobalConfig.background.desktopClock.background.opacity = root.desktopClockBackgroundOpacity;
         GlobalConfig.background.desktopClock.background.blur = root.desktopClockBackgroundBlur;
         GlobalConfig.background.desktopClock.invertColors = root.desktopClockInvertColors;
+
+        GlobalConfig.background.desktopPrayer.enabled = root.desktopPrayerEnabled;
+        GlobalConfig.background.desktopPrayer.scale = root.desktopPrayerScale;
+        GlobalConfig.background.desktopPrayer.position = root.desktopPrayerPosition;
+        GlobalConfig.background.desktopPrayer.shadow.enabled = root.desktopPrayerShadowEnabled;
+        GlobalConfig.background.desktopPrayer.shadow.opacity = root.desktopPrayerShadowOpacity;
+        GlobalConfig.background.desktopPrayer.shadow.blur = root.desktopPrayerShadowBlur;
+        GlobalConfig.background.desktopPrayer.background.enabled = root.desktopPrayerBackgroundEnabled;
+        GlobalConfig.background.desktopPrayer.background.opacity = root.desktopPrayerBackgroundOpacity;
+        GlobalConfig.background.desktopPrayer.background.blur = root.desktopPrayerBackgroundBlur;
+        GlobalConfig.background.desktopPrayer.invertColors = root.desktopPrayerInvertColors;
 
         GlobalConfig.background.wallpaperEnabled = root.wallpaperEnabled;
 

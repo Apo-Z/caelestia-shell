@@ -65,6 +65,28 @@ public:
         : ConfigObject(parent) {}
 };
 
+// Reuse existing config classes for DesktopPrayer (same structure as DesktopClock)
+using DesktopPrayerBackground = DesktopClockBackground;
+using DesktopPrayerShadow = DesktopClockShadow;
+
+class DesktopPrayer : public ConfigObject {
+    Q_OBJECT
+    QML_ANONYMOUS
+
+    CONFIG_PROPERTY(bool, enabled, false)
+    CONFIG_PROPERTY(qreal, scale, 1.0)
+    CONFIG_PROPERTY(QString, position, QStringLiteral("bottom-left"))
+    CONFIG_PROPERTY(bool, invertColors, false)
+    CONFIG_SUBOBJECT(DesktopPrayerBackground, background)
+    CONFIG_SUBOBJECT(DesktopPrayerShadow, shadow)
+
+public:
+    explicit DesktopPrayer(QObject* parent = nullptr)
+        : ConfigObject(parent)
+        , m_background(new DesktopPrayerBackground(this))
+        , m_shadow(new DesktopPrayerShadow(this)) {}
+};
+
 class BackgroundConfig : public ConfigObject {
     Q_OBJECT
     QML_ANONYMOUS
@@ -72,12 +94,14 @@ class BackgroundConfig : public ConfigObject {
     CONFIG_PROPERTY(bool, enabled, true)
     CONFIG_PROPERTY(bool, wallpaperEnabled, true)
     CONFIG_SUBOBJECT(DesktopClock, desktopClock)
+    CONFIG_SUBOBJECT(DesktopPrayer, desktopPrayer)
     CONFIG_SUBOBJECT(BackgroundVisualiser, visualiser)
 
 public:
     explicit BackgroundConfig(QObject* parent = nullptr)
         : ConfigObject(parent)
         , m_desktopClock(new DesktopClock(this))
+        , m_desktopPrayer(new DesktopPrayer(this))
         , m_visualiser(new BackgroundVisualiser(this)) {}
 };
 

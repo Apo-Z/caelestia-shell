@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Caelestia.Config
@@ -29,7 +30,7 @@ Variants {
         anchors.right: true
 
         Item {
-            id: behindClock
+            id: behindWidgets
 
             anchors.fill: parent
 
@@ -51,108 +52,142 @@ Variants {
             }
         }
 
-        Loader {
-            id: clockLoader
+        // Widget container that handles positioning and stacking
+        Item {
+            id: widgetArea
 
-            asynchronous: true
-            active: Config.background.desktopClock.enabled
-
+            anchors.fill: parent
             anchors.margins: Tokens.padding.large * 2
             anchors.leftMargin: Tokens.padding.large * 2 + Tokens.sizes.bar.innerWidth + Math.max(Tokens.padding.smaller, Config.border.thickness)
 
-            state: Config.background.desktopClock.position
-            states: [
-                State {
-                    name: "top-left"
+            readonly property string clockPos: Config.background.desktopClock.position
+            readonly property string prayerPos: Config.background.desktopPrayer.position
+            readonly property bool clockEnabled: Config.background.desktopClock.enabled
+            readonly property bool prayerEnabled: Config.background.desktopPrayer.enabled
 
-                    AnchorChanges {
-                        target: clockLoader
-                        anchors.top: parent.top
-                        anchors.left: parent.left
+            // Container for each position - widgets stack vertically when sharing position
+            component WidgetContainer: ColumnLayout {
+                id: container
+
+                required property string position
+
+                readonly property bool hasClock: widgetArea.clockEnabled && widgetArea.clockPos === position
+                readonly property bool hasPrayer: widgetArea.prayerEnabled && widgetArea.prayerPos === position
+                readonly property bool hasWidgets: hasClock || hasPrayer
+
+                visible: hasWidgets
+                spacing: Tokens.spacing.large
+
+                // Clock widget
+                Loader {
+                    id: clockLoader
+
+                    Layout.alignment: {
+                        if (container.position.endsWith("left")) return Qt.AlignLeft;
+                        if (container.position.endsWith("right")) return Qt.AlignRight;
+                        return Qt.AlignHCenter;
                     }
-                },
-                State {
-                    name: "top-center"
 
-                    AnchorChanges {
-                        target: clockLoader
-                        anchors.top: parent.top
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                },
-                State {
-                    name: "top-right"
+                    asynchronous: true
+                    active: container.hasClock
 
-                    AnchorChanges {
-                        target: clockLoader
-                        anchors.top: parent.top
-                        anchors.right: parent.right
-                    }
-                },
-                State {
-                    name: "middle-left"
+                    sourceComponent: DesktopClock {
+                        id: clockWidget
 
-                    AnchorChanges {
-                        target: clockLoader
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: parent.left
-                    }
-                },
-                State {
-                    name: "middle-center"
+                        wallpaper: behindWidgets
 
-                    AnchorChanges {
-                        target: clockLoader
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                },
-                State {
-                    name: "middle-right"
-
-                    AnchorChanges {
-                        target: clockLoader
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.right: parent.right
-                    }
-                },
-                State {
-                    name: "bottom-left"
-
-                    AnchorChanges {
-                        target: clockLoader
-                        anchors.bottom: parent.bottom
-                        anchors.left: parent.left
-                    }
-                },
-                State {
-                    name: "bottom-center"
-
-                    AnchorChanges {
-                        target: clockLoader
-                        anchors.bottom: parent.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                },
-                State {
-                    name: "bottom-right"
-
-                    AnchorChanges {
-                        target: clockLoader
-                        anchors.bottom: parent.bottom
-                        anchors.right: parent.right
+                        readonly property point mapped: clockLoader.mapToItem(behindWidgets, 0, 0)
+                        absX: mapped.x
+                        absY: mapped.y
                     }
                 }
-            ]
 
-            transitions: Transition {
-                AnchorAnim {}
+                // Prayer widget
+                Loader {
+                    id: prayerLoader
+
+                    Layout.alignment: {
+                        if (container.position.endsWith("left")) return Qt.AlignLeft;
+                        if (container.position.endsWith("right")) return Qt.AlignRight;
+                        return Qt.AlignHCenter;
+                    }
+
+                    asynchronous: true
+                    active: container.hasPrayer
+
+                    sourceComponent: DesktopPrayer {
+                        id: prayerWidget
+
+                        wallpaper: behindWidgets
+
+                        readonly property point mapped: prayerLoader.mapToItem(behindWidgets, 0, 0)
+                        absX: mapped.x
+                        absY: mapped.y
+                    }
+                }
             }
 
-            sourceComponent: DesktopClock {
-                wallpaper: behindClock
-                absX: clockLoader.x
-                absY: clockLoader.y
+            // Top-left
+            WidgetContainer {
+                position: "top-left"
+                anchors.top: parent.top
+                anchors.left: parent.left
+            }
+
+            // Top-center
+            WidgetContainer {
+                position: "top-center"
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            // Top-right
+            WidgetContainer {
+                position: "top-right"
+                anchors.top: parent.top
+                anchors.right: parent.right
+            }
+
+            // Middle-left
+            WidgetContainer {
+                position: "middle-left"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+            }
+
+            // Middle-center
+            WidgetContainer {
+                position: "middle-center"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            // Middle-right
+            WidgetContainer {
+                position: "middle-right"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+            }
+
+            // Bottom-left
+            WidgetContainer {
+                position: "bottom-left"
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+            }
+
+            // Bottom-center
+            WidgetContainer {
+                position: "bottom-center"
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            // Bottom-right
+            WidgetContainer {
+                position: "bottom-right"
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
             }
         }
     }
