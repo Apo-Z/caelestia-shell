@@ -31,6 +31,7 @@ class BarPopouts : public ConfigObject {
     CONFIG_PROPERTY(bool, tray, true)
     CONFIG_PROPERTY(bool, statusIcons, true)
     CONFIG_PROPERTY(bool, prayer, true)
+    CONFIG_PROPERTY(bool, kubernetes, true)
 
 public:
     explicit BarPopouts(QObject* parent = nullptr)
@@ -160,6 +161,7 @@ class BarConfig : public ConfigObject {
             vmap({ { u"id"_s, u"activeWindow"_s }, { u"enabled"_s, true } }),
             vmap({ { u"id"_s, u"spacer"_s }, { u"enabled"_s, true } }),
             vmap({ { u"id"_s, u"tray"_s }, { u"enabled"_s, true } }),
+            vmap({ { u"id"_s, u"kubernetes"_s }, { u"enabled"_s, false } }),
             vmap({ { u"id"_s, u"clock"_s }, { u"enabled"_s, true } }),
             vmap({ { u"id"_s, u"statusIcons"_s }, { u"enabled"_s, true } }),
             vmap({ { u"id"_s, u"power"_s }, { u"enabled"_s, true } }),

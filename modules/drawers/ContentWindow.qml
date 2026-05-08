@@ -63,7 +63,7 @@ StyledWindow {
     name: "drawers"
     WlrLayershell.exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: fsTransitionProg > 0 && contentItem.Config.general.showOverFullscreen ? WlrLayer.Overlay : WlrLayer.Top
-    WlrLayershell.keyboardFocus: visibilities.launcher || visibilities.session || panels.dashboard.needsKeyboard ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+    WlrLayershell.keyboardFocus: visibilities.launcher || visibilities.session || panels.dashboard.needsKeyboard || panels.kubernetes.needsKeyboard ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     mask: hasFullscreen ? emptyRegion : regions
 
@@ -103,13 +103,14 @@ StyledWindow {
     HyprlandFocusGrab {
         id: focusGrab
 
-        active: (visibilities.launcher && root.contentItem.Config.launcher.enabled) || (visibilities.session && root.contentItem.Config.session.enabled) || (visibilities.sidebar && root.contentItem.Config.sidebar.enabled) || (!root.contentItem.Config.dashboard.showOnHover && visibilities.dashboard && root.contentItem.Config.dashboard.enabled) || (panels.popouts.currentName.startsWith("traymenu") && (panels.popouts.current as StackView)?.depth > 1)
+        active: (visibilities.launcher && root.contentItem.Config.launcher.enabled) || (visibilities.session && root.contentItem.Config.session.enabled) || (visibilities.sidebar && root.contentItem.Config.sidebar.enabled) || (!root.contentItem.Config.dashboard.showOnHover && visibilities.dashboard && root.contentItem.Config.dashboard.enabled) || (visibilities.kubernetes && root.contentItem.Config.kubernetes.enabled) || (panels.popouts.currentName.startsWith("traymenu") && (panels.popouts.current as StackView)?.depth > 1)
         windows: [root]
         onCleared: {
             visibilities.launcher = false;
             visibilities.session = false;
             visibilities.sidebar = false;
             visibilities.dashboard = false;
+            visibilities.kubernetes = false;
             panels.popouts.hasCurrent = false;
             bar.closeTray();
         }
@@ -206,6 +207,13 @@ StyledWindow {
         }
 
         PanelBg {
+            id: kubernetesBg
+
+            panel: panels.kubernetes
+            deformAmount: 0.1
+        }
+
+        PanelBg {
             id: utilsBg
 
             panel: panels.utilities
@@ -278,6 +286,9 @@ StyledWindow {
             }
             notifications.transform: Matrix4x4 {
                 matrix: notifsBg.deformMatrix
+            }
+            kubernetes.transform: Matrix4x4 {
+                matrix: kubernetesBg.deformMatrix
             }
             utilities.transform: Matrix4x4 {
                 matrix: utilsBg.deformMatrix

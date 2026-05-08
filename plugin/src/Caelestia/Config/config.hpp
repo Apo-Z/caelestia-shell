@@ -13,6 +13,7 @@ class BorderConfig;
 class ControlCenterConfig;
 class DashboardConfig;
 class GeneralConfig;
+class KubernetesConfig;
 class LauncherConfig;
 class LockConfig;
 class NotifsConfig;
@@ -45,6 +46,7 @@ class GlobalConfig : public RootConfig {
     Q_MOC_INCLUDE("userpaths.hpp")
     Q_MOC_INCLUDE("utilitiesconfig.hpp")
     Q_MOC_INCLUDE("winfoconfig.hpp")
+    Q_MOC_INCLUDE("kubernetesconfig.hpp")
 
     CONFIG_PROPERTY(bool, enabled, true)
     CONFIG_SUBOBJECT(AppearanceConfig, appearance)
@@ -62,6 +64,7 @@ class GlobalConfig : public RootConfig {
     CONFIG_SUBOBJECT(LockConfig, lock)
     CONFIG_SUBOBJECT(UtilitiesConfig, utilities)
     CONFIG_SUBOBJECT(SidebarConfig, sidebar)
+    CONFIG_SUBOBJECT(KubernetesConfig, kubernetes)
     CONFIG_SUBOBJECT(ServiceConfig, services)
     CONFIG_SUBOBJECT(UserPaths, paths)
 

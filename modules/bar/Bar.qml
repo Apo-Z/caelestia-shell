@@ -77,6 +77,10 @@ ColumnLayout {
             popouts.currentName = "prayer";
             popouts.currentCenter = (ch.item as Item).mapToItem(root, 0, (ch.item as Item).implicitHeight / 2).y ?? 0;
             popouts.hasCurrent = true;
+        } else if (id === "kubernetes" && Config.bar.popouts.kubernetes) {
+            popouts.currentName = "kubernetes";
+            popouts.currentCenter = (ch.item as Item).mapToItem(root, 0, (ch.item as Item).implicitHeight / 2).y ?? 0;
+            popouts.hasCurrent = true;
         }
     }
 
@@ -167,6 +171,13 @@ ColumnLayout {
                 delegate: WrappedLoader {
                     visible: !root.fullscreen
                     sourceComponent: PrayerEntry {}
+                }
+            }
+            DelegateChoice {
+                roleValue: "kubernetes"
+                delegate: WrappedLoader {
+                    visible: !root.fullscreen
+                    sourceComponent: KubernetesEntry {}
                 }
             }
             DelegateChoice {

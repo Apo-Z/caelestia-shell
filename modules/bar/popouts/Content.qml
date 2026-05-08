@@ -131,6 +131,13 @@ Item {
             sourceComponent: PrayerPopout {}
         }
 
+        Popout {
+            name: "kubernetes"
+            sourceComponent: KubernetesPopout {
+                popouts: root.popouts
+            }
+        }
+
         Repeater {
             model: ScriptModel {
                 values: SystemTray.items.values.filter(i => !GlobalConfig.bar.tray.hiddenIcons.includes(i.id))

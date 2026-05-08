@@ -6,6 +6,7 @@
 #include "controlcenterconfig.hpp"
 #include "dashboardconfig.hpp"
 #include "generalconfig.hpp"
+#include "kubernetesconfig.hpp"
 #include "launcherconfig.hpp"
 #include "lockconfig.hpp"
 #include "monitorconfigmanager.hpp"
@@ -41,6 +42,7 @@ GlobalConfig::GlobalConfig(QObject* parent)
     , m_border(new BorderConfig(this))
     , m_dashboard(new DashboardConfig(this))
     , m_controlCenter(new ControlCenterConfig(this))
+    , m_kubernetes(new KubernetesConfig(this))
     , m_launcher(new LauncherConfig(this))
     , m_notifs(new NotifsConfig(this))
     , m_osd(new OsdConfig(this))
@@ -63,6 +65,7 @@ GlobalConfig::GlobalConfig(GlobalConfig* fallback, const QString& filePath, cons
     , m_border(new BorderConfig(this))
     , m_dashboard(new DashboardConfig(this))
     , m_controlCenter(new ControlCenterConfig(this))
+    , m_kubernetes(new KubernetesConfig(this))
     , m_launcher(new LauncherConfig(this))
     , m_notifs(new NotifsConfig(this))
     , m_osd(new OsdConfig(this))
