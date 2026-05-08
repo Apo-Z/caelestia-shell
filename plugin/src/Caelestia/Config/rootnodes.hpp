@@ -13,6 +13,7 @@
 #include "dashboardconfig.hpp"
 #include "font.hpp"
 #include "generalconfig.hpp"
+#include "kubernetesconfig.hpp"
 #include "launcherconfig.hpp"
 #include "lockconfig.hpp"
 #include "nexusconfig.hpp"
@@ -48,6 +49,7 @@ class ConfigRoot : public settings::RootNode {
     CONFIG_SUBOBJECT(SidebarConfig, sidebar)
     CONFIG_SUBOBJECT(UtilitiesConfig, utilities)
     CONFIG_SUBOBJECT(UserPaths, paths)
+    CONFIG_SUBOBJECT(KubernetesConfig, kubernetes)
 
 public:
     explicit ConfigRoot(const QString& path, ConfigRoot* fallback = nullptr, QObject* parent = nullptr);

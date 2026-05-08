@@ -27,6 +27,7 @@ qml_module(caelestia-config
         userpaths.hpp
         utilitiesconfig.hpp
         tokens.hpp
+        kubernetesconfig.hpp
     LIBRARIES
         Qt::Quick
         Qt::QuickControls2

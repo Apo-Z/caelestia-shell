@@ -30,6 +30,7 @@ class Config : public QQuickAttachedPropertyPropagator, public QQmlParserStatus 
     Q_PROPERTY(const caelestia::config::SidebarConfig* sidebar READ sidebar NOTIFY sourceChanged)
     Q_PROPERTY(const caelestia::config::UtilitiesConfig* utilities READ utilities NOTIFY sourceChanged)
     Q_PROPERTY(const caelestia::config::UserPaths* paths READ paths NOTIFY sourceChanged)
+    Q_PROPERTY(const caelestia::config::KubernetesConfig* kubernetes READ kubernetes NOTIFY sourceChanged)
 
 public:
     explicit Config(QObject* parent = nullptr);
@@ -53,6 +54,7 @@ public:
     [[nodiscard]] const SidebarConfig* sidebar() const;
     [[nodiscard]] const UtilitiesConfig* utilities() const;
     [[nodiscard]] const UserPaths* paths() const;
+    [[nodiscard]] const KubernetesConfig* kubernetes() const;
 
     [[nodiscard]] Q_INVOKABLE static ConfigRoot* forScreen(const QString& screen);
 

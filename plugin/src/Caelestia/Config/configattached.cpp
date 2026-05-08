@@ -81,6 +81,7 @@ CONFIG_ATTACHED_GETTER(SessionConfig, session)
 CONFIG_ATTACHED_GETTER(SidebarConfig, sidebar)
 CONFIG_ATTACHED_GETTER(UtilitiesConfig, utilities)
 CONFIG_ATTACHED_GETTER(UserPaths, paths)
+CONFIG_ATTACHED_GETTER(KubernetesConfig, kubernetes)
 
 #undef CONFIG_ATTACHED_GETTER
 
