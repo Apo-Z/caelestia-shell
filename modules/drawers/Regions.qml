@@ -68,6 +68,12 @@ Region {
     }
 
     R {
+        panel: root.panels.kubernetes
+        y: root.win.height - height
+        height: panel.height * (1 - root.panels.kubernetes.offsetScale) + root.borderThickness
+    }
+
+    R {
         panel: root.panels.popoutsWrapper
         width: panel.width * (1 - root.panels.popoutsWrapper.offsetScale)
     }

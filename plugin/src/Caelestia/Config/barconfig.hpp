@@ -28,6 +28,7 @@ class BarPopouts : public settings::ObjectNode {
     CONFIG_PROPERTY(bool, tray, true)
     CONFIG_PROPERTY(bool, statusIcons, true)
     CONFIG_PROPERTY(bool, prayer, true)
+    CONFIG_PROPERTY(bool, kubernetes, true)
 };
 
 class BarWorkspaces : public settings::ObjectNode {
@@ -143,6 +144,7 @@ class BarConfig : public settings::ObjectNode {
             LIST_ENTRY(activeWindow, true),
             LIST_ENTRY(spacer, true),
             LIST_ENTRY(tray, true),
+            LIST_ENTRY(kubernetes, false),
             LIST_ENTRY(clock, true),
             LIST_ENTRY(statusIcons, true),
             LIST_ENTRY(power, true),
