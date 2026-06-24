@@ -9,7 +9,7 @@ StyledRect {
     id: root
 
     readonly property color colour: Colours.palette.m3tertiary
-    readonly property int padding: Config.bar.prayer.background ? Tokens.padding.normal : Tokens.padding.small
+    readonly property int padding: Config.bar.prayer.background ? Tokens.padding.medium : Tokens.padding.small
 
     // Helper function to get icon for prayer based on time of day
     function getPrayerIcon(prayerId: string): string {
@@ -61,8 +61,8 @@ StyledRect {
 
             horizontalAlignment: StyledText.AlignHCenter
             text: Prayer.nextName ? Prayer.nextName.substring(0, 3) : "---"
-            font.pointSize: Tokens.font.size.smaller
-            font.family: Tokens.font.family.sans
+            font.pointSize: Tokens.font.body.small.pointSize
+            font.family: Tokens.font.body.small.family
             color: root.colour
         }
 
@@ -81,8 +81,8 @@ StyledRect {
 
             horizontalAlignment: StyledText.AlignHCenter
             text: Prayer.nextTime ? Prayer.nextTime.replace(":", "\n") : "--\n--"
-            font.pointSize: Tokens.font.size.smaller
-            font.family: Tokens.font.family.mono
+            font.pointSize: Tokens.font.mono.small.pointSize
+            font.family: Tokens.font.mono.small.family
             color: root.colour
         }
     }

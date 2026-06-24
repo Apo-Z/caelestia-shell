@@ -23,14 +23,14 @@ ColumnLayout {
     // Header with context info
     RowLayout {
         Layout.fillWidth: true
-        Layout.topMargin: Tokens.padding.normal
+        Layout.topMargin: Tokens.padding.medium
         Layout.rightMargin: Tokens.padding.small
         spacing: Tokens.spacing.small
 
         MaterialIcon {
             text: Kubernetes.available ? "cloud" : "cloud_off"
             color: Colours.palette.m3primary
-            font.pointSize: Tokens.font.size.large
+            fontStyle: Tokens.font.icon.large
         }
 
         ColumnLayout {
@@ -46,8 +46,8 @@ ColumnLayout {
 
             StyledText {
                 text: `ns: ${Kubernetes.currentNamespace}`
-                font.pointSize: Tokens.font.size.smaller
-                font.family: Tokens.font.family.mono
+                font.pointSize: Tokens.font.body.small.pointSize
+                font.family: Tokens.font.mono.small.family
                 color: Colours.palette.m3onSurfaceVariant
             }
         }
@@ -72,7 +72,7 @@ ColumnLayout {
             MaterialIcon {
                 anchors.centerIn: parent
                 text: "open_in_full"
-                font.pointSize: Tokens.font.size.small
+                fontStyle: Tokens.font.icon.small
                 color: Colours.palette.m3onPrimaryContainer
             }
         }
@@ -87,16 +87,16 @@ ColumnLayout {
 
         StyledRect {
             Layout.fillWidth: true
-            implicitHeight: notAvailableContent.implicitHeight + Tokens.padding.normal * 2
-            radius: Tokens.rounding.normal
+            implicitHeight: notAvailableContent.implicitHeight + Tokens.padding.medium * 2
+            radius: Tokens.rounding.medium
             color: Qt.alpha(Colours.palette.m3errorContainer, 0.5)
 
             ColumnLayout {
                 id: notAvailableContent
 
                 anchors.centerIn: parent
-                anchors.margins: Tokens.padding.normal
-                spacing: Tokens.spacing.smaller
+                anchors.margins: Tokens.padding.medium
+                spacing: Tokens.spacing.small
 
                 RowLayout {
                     spacing: Tokens.spacing.small
@@ -113,10 +113,10 @@ ColumnLayout {
                     }
                 }
 
-                StyledText {
+                 StyledText {
                     visible: Kubernetes.lastError
                     text: Kubernetes.lastError
-                    font.pointSize: Tokens.font.size.smaller
+                    font.pointSize: Tokens.font.body.small.pointSize
                     color: Colours.palette.m3onErrorContainer
                     opacity: 0.8
                     wrapMode: Text.WordWrap
@@ -170,12 +170,12 @@ ColumnLayout {
     }
 
     // Nodes section
-    StyledText {
-        Layout.rightMargin: Tokens.padding.small
-        visible: Kubernetes.available && Kubernetes.nodes.length > 0
-        text: qsTr("Nodes")
-        font.weight: Font.Medium
-        font.pointSize: Tokens.font.size.small
+        StyledText {
+            Layout.rightMargin: Tokens.padding.small
+            visible: Kubernetes.available && Kubernetes.nodes.length > 0
+            text: qsTr("Nodes")
+            font.weight: Font.Medium
+            font.pointSize: Tokens.font.body.small.pointSize
         color: Colours.palette.m3onSurfaceVariant
     }
 
@@ -218,14 +218,14 @@ ColumnLayout {
             StyledText {
                 Layout.fillWidth: true
                 text: nodeRow.modelData.name
-                font.family: Tokens.font.family.mono
-                font.pointSize: Tokens.font.size.small
+                font.family: Tokens.font.mono.small.family
+                font.pointSize: Tokens.font.body.small.pointSize
                 elide: Text.ElideMiddle
             }
 
             StyledText {
                 text: nodeRow.modelData.roles
-                font.pointSize: Tokens.font.size.smaller
+                font.pointSize: Tokens.font.body.small.pointSize
                 color: Colours.palette.m3onSurfaceVariant
             }
         }
@@ -236,7 +236,7 @@ ColumnLayout {
         Layout.rightMargin: Tokens.padding.small
         visible: Kubernetes.nodes.length > 4
         text: qsTr("+ %1 more nodes").arg(Kubernetes.nodes.length - 4)
-        font.pointSize: Tokens.font.size.smaller
+        font.pointSize: Tokens.font.body.small.pointSize
         color: Colours.palette.m3onSurfaceVariant
         font.italic: true
     }
@@ -256,7 +256,7 @@ ColumnLayout {
         visible: unhealthyPods.count > 0
         text: qsTr("Unhealthy Pods")
         font.weight: Font.Medium
-        font.pointSize: Tokens.font.size.small
+        font.pointSize: Tokens.font.body.small.pointSize
         color: Colours.palette.m3error
     }
 
@@ -293,21 +293,21 @@ ColumnLayout {
 
             MaterialIcon {
                 text: "warning"
-                font.pointSize: Tokens.font.size.small
+                fontStyle: Tokens.font.icon.small
                 color: Colours.palette.m3error
             }
 
             StyledText {
                 Layout.fillWidth: true
                 text: podRow.modelData.name
-                font.family: Tokens.font.family.mono
-                font.pointSize: Tokens.font.size.small
+                font.family: Tokens.font.mono.small.family
+                font.pointSize: Tokens.font.body.small.pointSize
                 elide: Text.ElideMiddle
             }
 
             StyledText {
                 text: podRow.modelData.status
-                font.pointSize: Tokens.font.size.smaller
+                font.pointSize: Tokens.font.body.small.pointSize
                 color: Colours.palette.m3error
             }
         }
@@ -339,13 +339,13 @@ ColumnLayout {
         spacing: Tokens.spacing.small
 
         CircularIndicator {
-            implicitSize: 16
+            implicitSize: Tokens.font.body.medium.pointSize
             running: Kubernetes.loading
         }
 
         StyledText {
             text: qsTr("Refreshing...")
-            font.pointSize: Tokens.font.size.small
+            font.pointSize: Tokens.font.body.small.pointSize
             color: Colours.palette.m3onSurfaceVariant
         }
     }
@@ -360,7 +360,7 @@ ColumnLayout {
         property color boxColor: Colours.palette.m3primary
 
         implicitHeight: statCol.implicitHeight + Tokens.padding.small * 2
-        radius: Tokens.rounding.normal
+        radius: Tokens.rounding.medium
         color: Qt.alpha(boxColor, 0.1)
 
         ColumnLayout {
@@ -371,17 +371,17 @@ ColumnLayout {
 
             RowLayout {
                 Layout.alignment: Qt.AlignHCenter
-                spacing: Tokens.spacing.smaller
+                spacing: Tokens.spacing.small
 
                 MaterialIcon {
                     text: statBox.icon
-                    font.pointSize: Tokens.font.size.small
+                    fontStyle: Tokens.font.icon.medium
                     color: statBox.boxColor
                 }
 
                 StyledText {
                     text: statBox.value
-                    font.pointSize: Tokens.font.size.large
+                    font.pointSize: Tokens.font.body.large.pointSize
                     font.weight: Font.Bold
                     color: statBox.boxColor
                 }
@@ -390,7 +390,7 @@ ColumnLayout {
             StyledText {
                 Layout.alignment: Qt.AlignHCenter
                 text: statBox.label
-                font.pointSize: Tokens.font.size.smaller
+                font.pointSize: Tokens.font.body.small.pointSize
                 color: Colours.palette.m3onSurfaceVariant
             }
         }

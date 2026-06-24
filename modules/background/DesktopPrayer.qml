@@ -74,17 +74,17 @@ Item {
             id: layout
 
             anchors.centerIn: parent
-            spacing: Tokens.spacing.normal * root.prayerScale
+            spacing: Tokens.spacing.medium * root.prayerScale
 
             // Next prayer - large display
             ColumnLayout {
                 Layout.alignment: Qt.AlignHCenter
-                spacing: Tokens.spacing.smaller * root.prayerScale
+                spacing: Tokens.spacing.small * root.prayerScale
 
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     text: Prayer.nextName || qsTr("Loading...")
-                    font.pointSize: Tokens.font.size.large * root.prayerScale
+                    font.pointSize: Tokens.font.body.large.pointSize * root.prayerScale
                     font.letterSpacing: 2
                     font.weight: Font.Medium
                     color: root.safeSecondary
@@ -94,7 +94,7 @@ Item {
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     text: Prayer.nextTime || "--:--"
-                    font.pointSize: Tokens.font.size.extraLarge * 2.5 * root.prayerScale
+                    font.pointSize: Tokens.font.headline.medium.pointSize * 2.5 * root.prayerScale
                     font.weight: Font.Bold
                     color: root.safePrimary
                 }
@@ -115,7 +115,7 @@ Item {
                 id: prayerTimesRow
 
                 Layout.alignment: Qt.AlignHCenter
-                spacing: Tokens.spacing.larger * root.prayerScale
+                spacing: Tokens.spacing.large * root.prayerScale
 
                 Repeater {
                     model: Prayer.prayers
@@ -129,13 +129,13 @@ Item {
                         readonly property bool isNext: index === Prayer.nextIndex
                         readonly property bool isSunrise: modelData.id === "chourouk"
 
-                        spacing: Tokens.spacing.smallest * root.prayerScale
+                        spacing: Tokens.spacing.extraSmall * root.prayerScale
                         opacity: isNext ? 1 : (isSunrise ? 0.5 : 0.7)
 
                         StyledText {
                             Layout.alignment: Qt.AlignHCenter
                             text: prayerDelegate.modelData.name
-                            font.pointSize: Tokens.font.size.small * root.prayerScale
+                            font.pointSize: Tokens.font.body.small.pointSize * root.prayerScale
                             font.weight: prayerDelegate.isNext ? Font.Bold : Font.Normal
                             font.letterSpacing: 1
                             color: prayerDelegate.isNext ? root.safePrimary : root.safeSecondary
@@ -144,7 +144,7 @@ Item {
                         StyledText {
                             Layout.alignment: Qt.AlignHCenter
                             text: prayerDelegate.modelData.time
-                            font.pointSize: Tokens.font.size.normal * root.prayerScale
+                            font.pointSize: Tokens.font.body.medium.pointSize * root.prayerScale
                             font.weight: prayerDelegate.isNext ? Font.Bold : Font.Medium
                             color: prayerDelegate.isNext ? root.safePrimary : root.safeTertiary
                         }
@@ -160,7 +160,7 @@ Item {
 
                 sourceComponent: StyledText {
                     text: Prayer.error
-                    font.pointSize: Tokens.font.size.small * root.prayerScale
+                    font.pointSize: Tokens.font.body.small.pointSize * root.prayerScale
                     color: Colours.palette.m3error
                     opacity: 0.8
                 }

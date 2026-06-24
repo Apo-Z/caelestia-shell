@@ -3,13 +3,13 @@
 #include "backgroundconfig.hpp"
 #include "barconfig.hpp"
 #include "borderconfig.hpp"
-#include "controlcenterconfig.hpp"
 #include "dashboardconfig.hpp"
 #include "generalconfig.hpp"
 #include "kubernetesconfig.hpp"
 #include "launcherconfig.hpp"
 #include "lockconfig.hpp"
 #include "monitorconfigmanager.hpp"
+#include "nexusconfig.hpp"
 #include "notifsconfig.hpp"
 #include "osdconfig.hpp"
 #include "serviceconfig.hpp"
@@ -41,17 +41,17 @@ GlobalConfig::GlobalConfig(QObject* parent)
     , m_bar(new BarConfig(this))
     , m_border(new BorderConfig(this))
     , m_dashboard(new DashboardConfig(this))
-    , m_controlCenter(new ControlCenterConfig(this))
     , m_kubernetes(new KubernetesConfig(this))
     , m_launcher(new LauncherConfig(this))
+    , m_lock(new LockConfig(this))
+    , m_nexus(new NexusConfig(this))
     , m_notifs(new NotifsConfig(this))
     , m_osd(new OsdConfig(this))
-    , m_session(new SessionConfig(this))
-    , m_winfo(new WInfoConfig(this))
-    , m_lock(new LockConfig(this))
-    , m_utilities(new UtilitiesConfig(this))
-    , m_sidebar(new SidebarConfig(this))
     , m_services(new ServiceConfig(this))
+    , m_session(new SessionConfig(this))
+    , m_sidebar(new SidebarConfig(this))
+    , m_utilities(new UtilitiesConfig(this))
+    , m_winfo(new WInfoConfig(this))
     , m_paths(new UserPaths(this)) {
     setupFileBackend(configDir() + QStringLiteral("shell.json"));
 }
@@ -64,17 +64,17 @@ GlobalConfig::GlobalConfig(GlobalConfig* fallback, const QString& filePath, cons
     , m_bar(new BarConfig(this))
     , m_border(new BorderConfig(this))
     , m_dashboard(new DashboardConfig(this))
-    , m_controlCenter(new ControlCenterConfig(this))
     , m_kubernetes(new KubernetesConfig(this))
     , m_launcher(new LauncherConfig(this))
+    , m_lock(new LockConfig(this))
+    , m_nexus(new NexusConfig(this))
     , m_notifs(new NotifsConfig(this))
     , m_osd(new OsdConfig(this))
-    , m_session(new SessionConfig(this))
-    , m_winfo(new WInfoConfig(this))
-    , m_lock(new LockConfig(this))
-    , m_utilities(new UtilitiesConfig(this))
-    , m_sidebar(new SidebarConfig(this))
     , m_services(new ServiceConfig(this))
+    , m_session(new SessionConfig(this))
+    , m_sidebar(new SidebarConfig(this))
+    , m_utilities(new UtilitiesConfig(this))
+    , m_winfo(new WInfoConfig(this))
     , m_paths(new UserPaths(this)) {
     if (!filePath.isEmpty())
         setupFileBackend(filePath, screen);
@@ -106,7 +106,6 @@ void GlobalConfig::bindAppearanceTokens() {
     m_appearance->rounding()->bindTokens(tokenAppearance->rounding());
     m_appearance->spacing()->bindTokens(tokenAppearance->spacing());
     m_appearance->padding()->bindTokens(tokenAppearance->padding());
-    m_appearance->font()->size()->bindTokens(tokenAppearance->fontSize());
     m_appearance->anim()->durations()->bindTokens(tokenAppearance->animDurations());
     m_tokensBound = true;
 }

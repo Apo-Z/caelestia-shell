@@ -57,8 +57,8 @@ Variants {
             id: widgetArea
 
             anchors.fill: parent
-            anchors.margins: Tokens.padding.large * 2
-            anchors.leftMargin: Tokens.padding.large * 2 + Tokens.sizes.bar.innerWidth + Math.max(Tokens.padding.smaller, Config.border.thickness)
+            anchors.margins: Tokens.padding.extraLargeIncreased
+            anchors.leftMargin: Tokens.padding.extraLargeIncreased + Tokens.sizes.bar.innerWidth + Math.max(Tokens.padding.small, Config.border.thickness)
 
             readonly property string clockPos: Config.background.desktopClock.position
             readonly property string prayerPos: Config.background.desktopPrayer.position

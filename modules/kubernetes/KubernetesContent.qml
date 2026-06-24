@@ -401,15 +401,15 @@ General
         StyledRect {
             Layout.fillWidth: true
             implicitWidth: 850
-            implicitHeight: headerRow.implicitHeight + Tokens.padding.normal * 2
+            implicitHeight: headerRow.implicitHeight + Tokens.padding.medium * 2
             color: Colours.palette.m3surfaceContainerHigh
-            radius: Tokens.rounding.normal
+            radius: Tokens.rounding.medium
 
             RowLayout {
                 id: headerRow
                 anchors.fill: parent
-                anchors.margins: Tokens.padding.normal
-                spacing: Tokens.spacing.normal
+                anchors.margins: Tokens.padding.medium
+                spacing: Tokens.spacing.medium
 
                 MaterialIcon {
                     text: "cloud"
@@ -431,7 +431,7 @@ General
                 // Namespace button
                 StyledRect {
                     id: nsButton
-                    implicitWidth: nsRow.implicitWidth + Tokens.padding.normal * 2
+                    implicitWidth: nsRow.implicitWidth + Tokens.padding.medium * 2
                     implicitHeight: nsRow.implicitHeight + Tokens.padding.small * 2
                     radius: Tokens.rounding.small
                     color: Colours.palette.m3surfaceContainerHighest
@@ -439,23 +439,23 @@ General
                     RowLayout {
                         id: nsRow
                         anchors.centerIn: parent
-                        spacing: Tokens.spacing.smaller
+                        spacing: Tokens.spacing.small
 
                         MaterialIcon {
                             text: "folder"
-                            font.pointSize: Tokens.font.size.small
+                            font.pointSize: Tokens.font.body.small.pointSize
                             color: Colours.palette.m3onSurfaceVariant
                         }
 
                         StyledText {
                             text: Kubernetes.currentNamespace === "__all__" ? qsTr("All") : Kubernetes.currentNamespace
-                            font.pointSize: Tokens.font.size.small
+                            font.pointSize: Tokens.font.body.small.pointSize
                         }
 
                         StyledText {
                             text: "n"
-                            font.family: Tokens.font.family.mono
-                            font.pointSize: Tokens.font.size.smaller
+                            font.family: Tokens.font.mono.small.family
+                            font.pointSize: Tokens.font.body.small.pointSize
                             color: Colours.palette.m3onSurfaceVariant
                             opacity: 0.5
                         }
@@ -472,7 +472,7 @@ General
                 // Search indicator
                 StyledRect {
                     visible: kubeState.searchMode || kubeState.searchQuery
-                    implicitWidth: searchIndicator.implicitWidth + Tokens.padding.normal * 2
+                    implicitWidth: searchIndicator.implicitWidth + Tokens.padding.medium * 2
                     implicitHeight: searchIndicator.implicitHeight + Tokens.padding.small * 2
                     radius: Tokens.rounding.small
                     color: kubeState.searchMode ? Colours.palette.m3primaryContainer : Colours.palette.m3surfaceContainerHighest
@@ -480,17 +480,17 @@ General
                     RowLayout {
                         id: searchIndicator
                         anchors.centerIn: parent
-                        spacing: Tokens.spacing.smaller
+                        spacing: Tokens.spacing.small
 
                         StyledText {
                             text: "/"
-                            font.family: Tokens.font.family.mono
+                            font.family: Tokens.font.mono.small.family
                             color: kubeState.searchMode ? Colours.palette.m3onPrimaryContainer : Colours.palette.m3onSurfaceVariant
                         }
 
                         StyledText {
                             text: kubeState.searchQuery || (kubeState.searchMode ? "..." : "")
-                            font.family: Tokens.font.family.mono
+                            font.family: Tokens.font.mono.small.family
                             color: kubeState.searchMode ? Colours.palette.m3onPrimaryContainer : Colours.palette.m3onSurface
                         }
                     }
@@ -499,15 +499,15 @@ General
                 // Stats
                 StyledText {
                     text: qsTr("%1/%2").arg(Kubernetes.runningPods).arg(Kubernetes.totalPods)
-                    font.family: Tokens.font.family.mono
-                    font.pointSize: Tokens.font.size.small
+                    font.family: Tokens.font.mono.small.family
+                    font.pointSize: Tokens.font.body.small.pointSize
                     color: Colours.palette.m3primary
                 }
 
                 StyledText {
                     visible: Kubernetes.failedPods > 0
                     text: Kubernetes.failedPods + " ✗"
-                    font.pointSize: Tokens.font.size.small
+                    font.pointSize: Tokens.font.body.small.pointSize
                     color: Colours.palette.m3error
                 }
             }
@@ -527,31 +527,31 @@ General
                     required property int index
 
                     Layout.fillWidth: true
-                    implicitHeight: tabRow.implicitHeight + Tokens.padding.normal * 2
+                    implicitHeight: tabRow.implicitHeight + Tokens.padding.medium * 2
                     color: kubeState.currentTab === index ? Colours.palette.m3secondaryContainer : "transparent"
 
                     RowLayout {
                         id: tabRow
                         anchors.centerIn: parent
-                        spacing: Tokens.spacing.smaller
+                        spacing: Tokens.spacing.small
 
                         MaterialIcon {
                             text: tabBtn.modelData.icon
-                            font.pointSize: Tokens.font.size.normal
+                            font.pointSize: Tokens.font.body.medium.pointSize
                             color: kubeState.currentTab === tabBtn.index ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurfaceVariant
                             fill: kubeState.currentTab === tabBtn.index ? 1 : 0
                         }
 
                         StyledText {
                             text: tabBtn.modelData.label
-                            font.pointSize: Tokens.font.size.small
+                            font.pointSize: Tokens.font.body.small.pointSize
                             color: kubeState.currentTab === tabBtn.index ? Colours.palette.m3onSecondaryContainer : Colours.palette.m3onSurfaceVariant
                         }
 
                         StyledText {
                             text: tabBtn.index + 1
-                            font.family: Tokens.font.family.mono
-                            font.pointSize: Tokens.font.size.smaller
+                            font.family: Tokens.font.mono.small.family
+                            font.pointSize: Tokens.font.body.small.pointSize
                             color: Colours.palette.m3onSurfaceVariant
                             opacity: 0.5
                         }
@@ -574,7 +574,7 @@ General
             Layout.fillWidth: true
             implicitHeight: kubeState.currentView === "list" ? 350 : 450
             color: Colours.palette.m3surfaceContainer
-            radius: Tokens.rounding.normal
+            radius: Tokens.rounding.medium
 
             Behavior on implicitHeight {
                 Anim {}
@@ -583,19 +583,19 @@ General
             // List view
             ColumnLayout {
                 anchors.fill: parent
-                anchors.margins: Tokens.padding.normal
+                anchors.margins: Tokens.padding.medium
                 spacing: Tokens.spacing.small
                 visible: kubeState.currentView === "list"
 
                 // Header row
                 RowLayout {
                     Layout.fillWidth: true
-                    spacing: Tokens.spacing.normal
+                    spacing: Tokens.spacing.medium
 
                     StyledText {
                         Layout.preferredWidth: 220
                         text: qsTr("NAME")
-                        font.pointSize: Tokens.font.size.smaller
+                        font.pointSize: Tokens.font.body.small.pointSize
                         font.weight: Font.Medium
                         color: Colours.palette.m3onSurfaceVariant
                     }
@@ -604,7 +604,7 @@ General
                         Layout.preferredWidth: 100
                         visible: kubeState.currentTab === 0
                         text: qsTr("NAMESPACE")
-                        font.pointSize: Tokens.font.size.smaller
+                        font.pointSize: Tokens.font.body.small.pointSize
                         font.weight: Font.Medium
                         color: Colours.palette.m3onSurfaceVariant
                     }
@@ -612,7 +612,7 @@ General
                     StyledText {
                         Layout.preferredWidth: 90
                         text: qsTr("STATUS")
-                        font.pointSize: Tokens.font.size.smaller
+                        font.pointSize: Tokens.font.body.small.pointSize
                         font.weight: Font.Medium
                         color: Colours.palette.m3onSurfaceVariant
                     }
@@ -621,7 +621,7 @@ General
                         Layout.preferredWidth: 60
                         visible: kubeState.currentTab === 0
                         text: qsTr("READY")
-                        font.pointSize: Tokens.font.size.smaller
+                        font.pointSize: Tokens.font.body.small.pointSize
                         font.weight: Font.Medium
                         color: Colours.palette.m3onSurfaceVariant
                     }
@@ -629,7 +629,7 @@ General
                     StyledText {
                         Layout.fillWidth: true
                         text: qsTr("AGE")
-                        font.pointSize: Tokens.font.size.smaller
+                        font.pointSize: Tokens.font.body.small.pointSize
                         font.weight: Font.Medium
                         color: Colours.palette.m3onSurfaceVariant
                     }
@@ -665,7 +665,7 @@ General
                             id: rowLayout
                             anchors.fill: parent
                             anchors.margins: Tokens.padding.small
-                            spacing: Tokens.spacing.normal
+                            spacing: Tokens.spacing.medium
 
                             StyledRect {
                                 implicitWidth: 3
@@ -677,8 +677,8 @@ General
                             StyledText {
                                 Layout.preferredWidth: 215
                                 text: row.modelData.name
-                                font.family: Tokens.font.family.mono
-                                font.pointSize: Tokens.font.size.small
+                                font.family: Tokens.font.mono.small.family
+                                font.pointSize: Tokens.font.body.small.pointSize
                                 color: kubeState.selectedIndex === row.index ? Colours.palette.m3primary : Colours.palette.m3onSurface
                                 elide: Text.ElideMiddle
                             }
@@ -687,15 +687,15 @@ General
                                 Layout.preferredWidth: 100
                                 visible: kubeState.currentTab === 0
                                 text: row.modelData.namespace || "-"
-                                font.family: Tokens.font.family.mono
-                                font.pointSize: Tokens.font.size.small
+                                font.family: Tokens.font.mono.small.family
+                                font.pointSize: Tokens.font.body.small.pointSize
                                 color: Colours.palette.m3onSurfaceVariant
                                 elide: Text.ElideRight
                             }
 
                             RowLayout {
                                 Layout.preferredWidth: 90
-                                spacing: Tokens.spacing.smaller
+                                spacing: Tokens.spacing.small
 
                                 StyledRect {
                                     implicitWidth: 6
@@ -713,7 +713,7 @@ General
 
                                 StyledText {
                                     text: row.modelData.status || "-"
-                                    font.pointSize: Tokens.font.size.small
+                                    font.pointSize: Tokens.font.body.small.pointSize
                                 }
                             }
 
@@ -721,15 +721,15 @@ General
                                 Layout.preferredWidth: 60
                                 visible: kubeState.currentTab === 0
                                 text: row.modelData.ready || "-"
-                                font.family: Tokens.font.family.mono
-                                font.pointSize: Tokens.font.size.small
+                                font.family: Tokens.font.mono.small.family
+                                font.pointSize: Tokens.font.body.small.pointSize
                                 color: Colours.palette.m3onSurfaceVariant
                             }
 
                             StyledText {
                                 Layout.fillWidth: true
                                 text: row.modelData.age || "-"
-                                font.pointSize: Tokens.font.size.small
+                                font.pointSize: Tokens.font.body.small.pointSize
                                 color: Colours.palette.m3onSurfaceVariant
                             }
                         }
@@ -766,8 +766,8 @@ General
                     StyledText {
                         visible: kubeState.selectedIndex >= 0
                         text: qsTr("%1/%2").arg(kubeState.selectedIndex + 1).arg(filteredResources.length)
-                        font.family: Tokens.font.family.mono
-                        font.pointSize: Tokens.font.size.smaller
+                        font.family: Tokens.font.mono.small.family
+                        font.pointSize: Tokens.font.body.small.pointSize
                         color: Colours.palette.m3onSurfaceVariant
                     }
 
@@ -776,7 +776,7 @@ General
                     StyledText {
                         text: kubeState.searchMode ? qsTr("Type to search, Enter to confirm") : 
                               Kubernetes.loading ? qsTr("Loading...") : qsTr("j/k:nav  /:search  ?:help")
-                        font.pointSize: Tokens.font.size.smaller
+                        font.pointSize: Tokens.font.body.small.pointSize
                         color: Colours.palette.m3onSurfaceVariant
                         opacity: 0.6
                     }
@@ -786,7 +786,7 @@ General
             // Output view (logs, describe, help)
             ColumnLayout {
                 anchors.fill: parent
-                anchors.margins: Tokens.padding.normal
+                anchors.margins: Tokens.padding.medium
                 spacing: Tokens.spacing.small
                 visible: kubeState.currentView === "output"
 
@@ -834,8 +834,8 @@ General
                             id: outputText
                             width: outputFlick.width
                             text: kubeState.outputContent
-                            font.family: Tokens.font.family.mono
-                            font.pointSize: Tokens.font.size.small
+                            font.family: Tokens.font.mono.small.family
+                            font.pointSize: Tokens.font.body.small.pointSize
                             color: Colours.palette.m3onSurface
                             wrapMode: Text.Wrap
                             readOnly: true
@@ -851,7 +851,7 @@ General
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     text: qsTr("Esc to close • y to copy")
-                    font.pointSize: Tokens.font.size.smaller
+                    font.pointSize: Tokens.font.body.small.pointSize
                     color: Colours.palette.m3onSurfaceVariant
                     opacity: 0.5
                 }
@@ -860,7 +860,7 @@ General
             // Namespace selector
             ColumnLayout {
                 anchors.fill: parent
-                anchors.margins: Tokens.padding.normal
+                anchors.margins: Tokens.padding.medium
                 spacing: Tokens.spacing.small
                 visible: kubeState.currentView === "namespace"
 
@@ -906,15 +906,15 @@ General
                         required property int index
 
                         width: nsList.width
-                        implicitHeight: nsRowLayout.implicitHeight + Tokens.padding.normal * 2
+                        implicitHeight: nsRowLayout.implicitHeight + Tokens.padding.medium * 2
                         radius: Tokens.rounding.small
                         color: kubeState.nsSelectedIndex === index ? Qt.alpha(Colours.palette.m3primary, 0.12) : "transparent"
 
                         RowLayout {
                             id: nsRowLayout
                             anchors.fill: parent
-                            anchors.margins: Tokens.padding.normal
-                            spacing: Tokens.spacing.normal
+                            anchors.margins: Tokens.padding.medium
+                            spacing: Tokens.spacing.medium
 
                             StyledRect {
                                 implicitWidth: 3
@@ -955,7 +955,7 @@ General
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     text: qsTr("j/k:nav  Enter:select  Esc:cancel")
-                    font.pointSize: Tokens.font.size.smaller
+                    font.pointSize: Tokens.font.body.small.pointSize
                     color: Colours.palette.m3onSurfaceVariant
                     opacity: 0.5
                 }
@@ -964,7 +964,7 @@ General
             // Shell view - integrated terminal
             ColumnLayout {
                 anchors.fill: parent
-                anchors.margins: Tokens.padding.normal
+                anchors.margins: Tokens.padding.medium
                 spacing: Tokens.spacing.small
                 visible: kubeState.currentView === "shell"
 
@@ -985,7 +985,7 @@ General
 
                     StyledText {
                         text: kubeState.shellNamespace
-                        font.pointSize: Tokens.font.size.smaller
+                        font.pointSize: Tokens.font.body.small.pointSize
                         color: Colours.palette.m3onSurfaceVariant
                     }
 
@@ -1062,7 +1062,7 @@ General
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     text: qsTr("Ctrl+Esc to close")
-                    font.pointSize: Tokens.font.size.smaller
+                    font.pointSize: Tokens.font.body.small.pointSize
                     color: Colours.palette.m3onSurfaceVariant
                     opacity: 0.5
                 }

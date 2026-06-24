@@ -24,7 +24,7 @@ StyledRect {
     }
 
     implicitWidth: Tokens.sizes.bar.innerWidth
-    implicitHeight: icon.implicitHeight + Tokens.padding.normal * 2
+    implicitHeight: icon.implicitHeight + Tokens.padding.medium * 2
 
     color: Colours.tPalette.m3surfaceContainer
     radius: Tokens.rounding.full
@@ -102,7 +102,7 @@ StyledRect {
 
                 anchors.centerIn: parent
                 text: Kubernetes.failedPods > 9 ? "+" : Kubernetes.failedPods
-                font.pointSize: Tokens.font.size.smaller - 3
+                font.pointSize: Tokens.font.body.small.pointSize - 3
                 font.weight: Font.Bold
                 color: Colours.palette.m3onError
             }

@@ -23,7 +23,7 @@ Column {
         }
     }
 
-    spacing: Tokens.spacing.larger
+    spacing: Tokens.spacing.large
     width: Tokens.sizes.bar.prayerWidth
 
     // Header with next prayer - prominent display
@@ -34,21 +34,21 @@ Column {
         StyledText {
             anchors.horizontalCenter: parent.horizontalCenter
             text: qsTr("Next Prayer")
-            font.pointSize: Tokens.font.size.small
+            font.pointSize: Tokens.font.body.small.pointSize
             color: Colours.palette.m3onSurfaceVariant
         }
 
         Row {
             anchors.horizontalCenter: parent.horizontalCenter
-            spacing: Tokens.spacing.normal
+            spacing: Tokens.spacing.medium
 
-            MaterialIcon {
-                anchors.verticalCenter: parent.verticalCenter
-                text: Prayer.nextPrayer ? root.getPrayerIcon(Prayer.nextPrayer.id) : "schedule"
-                font.pointSize: Tokens.font.size.extraLarge
-                color: Colours.palette.m3primary
-                fill: 1
-            }
+                MaterialIcon {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: Prayer.nextPrayer ? root.getPrayerIcon(Prayer.nextPrayer.id) : "schedule"
+                    fontStyle: Tokens.font.icon.extraLarge
+                    color: Colours.palette.m3primary
+                    fill: 1
+                }
 
             Column {
                 anchors.verticalCenter: parent.verticalCenter
@@ -56,15 +56,15 @@ Column {
 
                 StyledText {
                     text: Prayer.nextName || qsTr("Loading...")
-                    font.pointSize: Tokens.font.size.large
+                    font.pointSize: Tokens.font.body.large.pointSize
                     font.weight: Font.Bold
                     color: Colours.palette.m3primary
                 }
 
                 StyledText {
                     text: Prayer.nextTime || "--:--"
-                    font.pointSize: Tokens.font.size.extraLarge
-                    font.family: Tokens.font.family.mono
+                    font.pointSize: Tokens.font.headline.medium.pointSize
+                    font.family: Tokens.font.mono.medium.family
                     font.weight: Font.Bold
                     color: Colours.palette.m3onSurface
                 }
@@ -84,12 +84,12 @@ Column {
     // All prayers - horizontal layout
     Column {
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: Tokens.spacing.normal
+        spacing: Tokens.spacing.medium
 
         StyledText {
             anchors.horizontalCenter: parent.horizontalCenter
             text: qsTr("Today's Prayers")
-            font.pointSize: Tokens.font.size.small
+            font.pointSize: Tokens.font.body.small.pointSize
             color: Colours.palette.m3onSurfaceVariant
         }
 
@@ -114,23 +114,23 @@ Column {
                     readonly property string prayerId: modelData ? modelData.id : ""
 
                     anchors.horizontalCenter: parent.horizontalCenter
-                    implicitWidth: prayerRow.implicitWidth + Tokens.padding.normal * 2
+                    implicitWidth: prayerRow.implicitWidth + Tokens.padding.medium * 2
                     implicitHeight: prayerRow.implicitHeight + Tokens.padding.small * 2
 
                     color: isNext ? Colours.palette.m3primaryContainer : "transparent"
-                    radius: Tokens.rounding.normal
+                    radius: Tokens.rounding.medium
                     opacity: isNext ? 1 : (isSunrise ? 0.5 : 0.8)
 
                     Row {
                         id: prayerRow
 
                         anchors.centerIn: parent
-                        spacing: Tokens.spacing.normal
+                        spacing: Tokens.spacing.medium
 
                         MaterialIcon {
                             anchors.verticalCenter: parent.verticalCenter
                             text: root.getPrayerIcon(prayerDelegate.prayerId)
-                            font.pointSize: Tokens.font.size.normal
+                            fontStyle: Tokens.font.icon.medium
                             color: prayerDelegate.isNext ? Colours.palette.m3onPrimaryContainer : Colours.palette.m3onSurfaceVariant
                             fill: prayerDelegate.isNext ? 1 : 0
                         }
@@ -138,7 +138,7 @@ Column {
                         StyledText {
                             anchors.verticalCenter: parent.verticalCenter
                             text: prayerDelegate.prayerName
-                            font.pointSize: Tokens.font.size.normal
+                            font.pointSize: Tokens.font.body.medium.pointSize
                             font.weight: prayerDelegate.isNext ? Font.Bold : Font.Normal
                             color: prayerDelegate.isNext ? Colours.palette.m3onPrimaryContainer : Colours.palette.m3onSurface
                             horizontalAlignment: Text.AlignLeft
@@ -148,8 +148,8 @@ Column {
                         StyledText {
                             anchors.verticalCenter: parent.verticalCenter
                             text: prayerDelegate.prayerTime
-                            font.pointSize: Tokens.font.size.normal
-                            font.family: Tokens.font.family.mono
+                            font.pointSize: Tokens.font.body.medium.pointSize
+                            font.family: Tokens.font.mono.medium.family
                             font.weight: prayerDelegate.isNext ? Font.Bold : Font.Medium
                             color: prayerDelegate.isNext ? Colours.palette.m3onPrimaryContainer : Colours.palette.m3onSurface
                         }
@@ -166,7 +166,7 @@ Column {
         visible: active
 
         sourceComponent: StyledRect {
-            implicitWidth: errorRow.implicitWidth + Tokens.padding.normal * 2
+            implicitWidth: errorRow.implicitWidth + Tokens.padding.medium * 2
             implicitHeight: errorRow.implicitHeight + Tokens.padding.small * 2
             color: Qt.alpha(Colours.palette.m3errorContainer, 0.5)
             radius: Tokens.rounding.small
@@ -179,14 +179,14 @@ Column {
                 MaterialIcon {
                     anchors.verticalCenter: parent.verticalCenter
                     text: "error"
-                    font.pointSize: Tokens.font.size.normal
+                    fontStyle: Tokens.font.icon.medium
                     color: Colours.palette.m3error
                 }
 
                 StyledText {
                     anchors.verticalCenter: parent.verticalCenter
                     text: Prayer.error
-                    font.pointSize: Tokens.font.size.small
+                    font.pointSize: Tokens.font.body.small.pointSize
                     color: Colours.palette.m3error
                 }
             }
