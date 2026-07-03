@@ -63,9 +63,9 @@ ColumnLayout {
                 color: Colours.palette.m3onPrimaryContainer
                 onClicked: {
                     root.popouts.hasCurrent = false;
-                    const v = Visibilities.getForActive();
-                    if (v)
-                        v.kubernetes = true;
+                    const screenState = ShellState.forActive();
+                    if (screenState)
+                        screenState.kubernetes = true;
                 }
             }
 

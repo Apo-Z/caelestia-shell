@@ -9,7 +9,7 @@ import qs.components
 Item {
     id: root
 
-    required property DrawerVisibilities visibilities
+    required property ScreenState screenState
 
     readonly property bool needsKeyboard: false
     readonly property real nonAnimHeight: 0
@@ -23,12 +23,12 @@ Item {
 
     // When visibility is requested, open the floating window instead
     Connections {
-        target: visibilities
+        target: screenState
         function onKubernetesChanged(): void {
-            if (visibilities.kubernetes && Config.kubernetes.enabled) {
+            if (screenState.kubernetes && Config.kubernetes.enabled) {
                 WindowFactory.open();
                 // Immediately reset the panel visibility
-                visibilities.kubernetes = false;
+                screenState.kubernetes = false;
             }
         }
     }
