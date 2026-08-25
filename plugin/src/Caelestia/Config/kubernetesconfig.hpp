@@ -1,16 +1,16 @@
 #pragma once
 
-#include "configobject.hpp"
-
 #include <qstring.h>
+
+#include "common.hpp"
+#include "settings/objectnode.hpp"
 
 namespace caelestia::config {
 
 using Qt::StringLiterals::operator""_s;
 
-class KubernetesConfig : public ConfigObject {
-    Q_OBJECT
-    QML_ANONYMOUS
+class KubernetesConfig : public settings::ObjectNode {
+    CONFIG_NODE(KubernetesConfig, settings::ObjectNode)
 
     CONFIG_PROPERTY(bool, enabled, false)
     CONFIG_PROPERTY(int, updateInterval, 5000)
@@ -18,10 +18,6 @@ class KubernetesConfig : public ConfigObject {
     CONFIG_PROPERTY(bool, showOnHover, true)
     CONFIG_GLOBAL_PROPERTY(QString, terminal, u"kitty"_s)
     CONFIG_GLOBAL_PROPERTY(QString, defaultNamespace, u"default"_s)
-
-public:
-    explicit KubernetesConfig(QObject* parent = nullptr)
-        : ConfigObject(parent) {}
 };
 
 } // namespace caelestia::config
