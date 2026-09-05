@@ -1,8 +1,8 @@
 #pragma once
 
-#include "rootnodes.hpp"
-
 #include <qquickattachedpropertypropagator.h>
+
+#include "rootnodes.hpp"
 
 namespace caelestia::config {
 
@@ -60,6 +60,9 @@ public:
 
     static Config* qmlAttachedProperties(QObject* object);
 
+    void classBegin() override;
+    void componentComplete() override;
+
 signals:
     void sourceChanged();
 
@@ -68,9 +71,6 @@ protected:
         QQuickAttachedPropertyPropagator* newParent, QQuickAttachedPropertyPropagator* oldParent) override;
 
 private:
-    void classBegin() override;
-    void componentComplete() override;
-
     void propagateScreen();
 
     bool m_complete = false;
