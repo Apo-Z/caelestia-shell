@@ -92,7 +92,7 @@ Singleton {
     Process {
         id: prayerProcess
 
-        command: ["/home/apo/scripts/prayer/run_prayer.sh"]
+        command: ["my-prayers"]
 
         onRunningChanged: {
             if (running)
