@@ -5,7 +5,7 @@
 #include "settings/objectnode.hpp"
 #include "common.hpp"
 
-namespace caelestia::config {
+namespace caelestia::shell::config {
 
 using Qt::StringLiterals::operator""_s;
 
@@ -20,4 +20,4 @@ class KubernetesConfig : public settings::ObjectNode {
     CONFIG_GLOBAL_PROPERTY(QString, defaultNamespace, u"default"_s)
 };
 
-} // namespace caelestia::config
+} // namespace caelestia::shell::config
